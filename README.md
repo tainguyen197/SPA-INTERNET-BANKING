@@ -1,6 +1,27 @@
-# 1: SPA INTERNET BANKING
+## OVERVIEW
 
-## SPA Internet Banking có các chức năng sau
+##### Sinh viên thực hiện đồ án theo nhóm
+
+##### Yêu cầu commit lên GITHUB đầy đủ
+
+##### Thời gian thực hiện: 20 ngày
+
+##### Yêu cầu: xây dựng ứng dụng web Internet Banking.
+
+## TECHNIQUES
+
+##### SPA (Frontend)
+*- vuejs / reactjs*
+
+*- vue-router / react-router*
+
+*- 0vuex / redux*
+
+
+
+## 1: SPA INTERNET BANKING
+
+### SPA Internet Banking có các chức năng sau
 
 ##### 1. Đăng nhập, có sử dụng Google Recaptcha
 
