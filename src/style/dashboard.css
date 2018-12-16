@@ -1,28 +1,121 @@
-
-.dashboard{
-
-}
-
 .dashboard-header{
     width: 100%;
-    height: 125px;
+    height: 155px;
     background: rgba(54,35,87,.8);
-    position: absolute;
+    position: block;
     border-radius: 2px;
     color: #FFF;
     text-align: center;
     box-shadow: -2px 0 20px 0 rgba(0,0,0,.4);
 }
 
+.icon-avatar{
+    border: 2px solid #fff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin-top: 20px;
+    background-image: url(../images/img_avatar.png);
+}
+
 .usernam-lable{
     font-size: 20px;
     display: block;
-    margin-top: 40px;
+    padding-top: 20px;
 }
 
 .dashboard-body{
     background-color: #FFF;
     width: 100%;
-    height: 500px;
+    height: 100%;
+    align-content: center;
 
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.account-list{
+    background-color: aqua;
+    width: 700px;
+    height: 170px;
+    text-align: center;
+}
+
+.center-home {
+    margin-bottom: 30px;
+    max-width: 662px;   
+    width: auto;
+    min-height: 120px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,.2);
+}
+
+.account-number{
+    background-color:white;
+    float: right;
+    margin-right: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.account-mode{
+    margin-left: 12px;
+    background-color:white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.home-line-cross {
+    width: 100%;
+    height: 1px;
+    background-color: #ededed;
+}
+
+.timo-spendaccounticon:before {
+    content:"\2709";
+    font-size: 35px;
+    color: aqua
+}
+
+.wallet-icon{
+    background-color: #FFF;
+}
+
+.wallet-transaction{
+    font-size: 20px;
+    margin-top: 10px;
+    background-color: #FFF;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.move-money{
+    margin-top: 14px;
+    background-color: #FFF;
+    margin-left: 250px;
+}
+
+.move-money-label{
+    padding-top: 14px;
+    background-color: #FFF;
+    margin-left: 220px;
+}
+
+
+
+.transfer-icon:before{
+    content: "\2601";
+    font-size: 35px;
+    color: aqua;
+    margin-top: 40px;
+}
+
+.home{
+    width: 100%;
+    height: 100%;
+    background-color: #FFF
 }
