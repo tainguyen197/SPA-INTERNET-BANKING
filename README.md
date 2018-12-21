@@ -42,9 +42,11 @@
 
 ##### 4. Thiết lập danh sách người nhận
 
--*Thông tin gồm { số tài khoản, tên gợi nhớ }. Trong trường hợp người dùng không nhập tên-gợi-nhớ, hệ thống sử dụng tên-đăng-ký của tài khoản người nhận làm tên-gợi-nhớ
-Xem lịch sử giao dịch của 1 tài khoản*
-##### 5. Đóng 1 tài-khoản-thanh-toán
+-*Thông tin gồm { số tài khoản, tên gợi nhớ }. Trong trường hợp người dùng không nhập tên-gợi-nhớ, hệ thống sử dụng tên-đăng-ký của tài khoản người nhận làm tên-gợi-nhớ*
+
+##### 5. Xem lịch sử giao dịch của 1 tài khoản
+
+##### 6. Đóng 1 tài-khoản-thanh-toán
 
 -*Hệ thống yêu cầu người dùng duy trì ít nhất 1 tài-khoản-thanh-toán*
 
