@@ -17,7 +17,7 @@ class ListAccount extends Component {
         return (
             <div>     
 
-                <div className="dashboard-body">
+              
                     <br></br>
                     <br></br>
                     <div className="center-home">
@@ -69,7 +69,7 @@ class ListAccount extends Component {
 
                     </div>
 
-                </div>
+               
             </div>
         )
     }
