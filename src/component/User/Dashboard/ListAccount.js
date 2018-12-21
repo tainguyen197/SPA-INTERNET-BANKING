@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../../../style/dashboard.css'
-
+import { Route, NavLink,  HashRouter } from 'react-router-dom'
 
 class ListAccount extends Component {
     constructor(props){
@@ -9,7 +9,7 @@ class ListAccount extends Component {
     }
 
     TransactionMoney(){
-        window.alert("Hello");
+       
     }
 
 
@@ -32,7 +32,7 @@ class ListAccount extends Component {
                         <div className="col-md-1 wallet-icon timo-spendaccounticon"></div>
                         <div className="col-md-3 wallet-transaction">3.200.333</div>
 
-                        <a className="col-md-2 move-money-label" onClick={this.TransactionMoney}>Chuyển tiền</a>
+                        <a className="col-md-2 move-money-label" onClick={this.TransactionMoney} ><NavLink to="/receiver">Chuyển tiền</NavLink></a>
                         <div className="col-md-1 transfer-icon"></div>
 
                     </div>
