@@ -55,7 +55,7 @@
 
 .center-home {
     margin-bottom: 30px;
-    max-width: 662px;   
+    max-width: 622px;   
     width: auto;
     min-height: 120px;
     position: relative;
@@ -87,11 +87,60 @@
     margin-right: auto;
 }
 
+.menu-content{
+    height: 100%;
+    width: 100%;
+    background-color: rebeccapurple
+}
+.glyph-menu{
+    margin-right: 5px
+}
+.center-menu {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    max-width: 662px;   
+    background-color: #FFF;
+    width: auto;
+    text-align: center;
+    font-size: 15px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.menu-line-cross{
+    width: 100%;
+    height: 2px;
+    background-color: #ededed
+}
 .center-list-receiver-button{
     float: right;
     background-color: aqua;
 }
 
+.center-list-transaction {
+    margin-bottom: 15px;
+    max-width: 662px;   
+    width: auto;
+    min-height: 70px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    box-shadow: 0 2px 6px 0 rgba(0,0,0,.2);
+}
+.account-transaction-right-content{
+    float: right;
+}
+.center-list-transaction-label {
+    padding-top: 35px;
+    max-width: 662px;   
+    width: auto;
+    font-size: 25px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
 .account-number{
     background-color:white;
     float: right;
@@ -124,12 +173,13 @@
 }
 
 .wallet-icon{
-    background-color: #FFF;
+    background-color: white;
+    padding-top: 14px;
 }
 
 .wallet-transaction{
     font-size: 20px;
-    margin-top: 10px;
+    margin-top: 14px;
     background-color: #FFF;
     margin-left: auto;
     margin-right: auto;
@@ -144,6 +194,29 @@
     margin-bottom: auto;
 }
 
+.name-account-transaction{
+    font-size: 15px;
+    background-color: #FFF;
+    margin-top: 13px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+}
+
+.name-account-transaction-number{
+    font-size: 15px;
+    background-color: #FFF;
+    padding-top: 7px;
+    color: indigo;
+    font-size: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
+}
+
+.account-transaction-wallet{
+    padding-left: 15px;
+}
 .move-money{
     margin-top: 14px;
     background-color: #FFF;
@@ -153,7 +226,7 @@
 .move-money-label{
     padding-top: 14px;
     background-color: #FFF;
-    margin-left: 220px;
+    margin-left: 250px;
 }
 
 
