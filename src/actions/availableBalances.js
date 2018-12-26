@@ -1,9 +1,23 @@
 import * as types from '../constants/ActionTypes'
 
-export function changeBalances(balances){
+export function DECREASE_BALANCES(payload){
     console.log('action-changeBalances');
     return{
-        type: types.DECREASE_BALANCES,
-        text: 'chan'
+        type: 'DECREASE_BALANCES',
+        payload
+    }
+}
+
+export function INCREASE_BALANCES(payload){
+    return{
+        type: 'INCREASE_BALANCES',
+        payload
+    }
+}
+
+export function DELETE(id){
+    return{
+        type: 'DELETE',
+        id: id
     }
 }

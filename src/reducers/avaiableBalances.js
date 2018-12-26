@@ -6,15 +6,29 @@ const initialState = [{
     id: 0
 }]
 
-export default function changeBalances(state = initialState, action) {
-    console.log(action.type);
+let id = 0;
+export default function changeBalances(state, action) {
     switch (action.type) {
-        case DECREASE_BALANCES:
-            return [{
-                text: action.text,
-                marked: false,
-                id: (state.length === 0) ? 0 : state[0].id + 1
-            }]
+        case 'DECREASE_BALANCES':
+            return [
+                ...state,
+                {
+                    ...action.payload
+                }];
+        case 'INCREASE_BALANCES':
+            return state.map(user => {
+                if (user.id !== action.payload.id){
+                    return user;
+                }
+                else {
+                    return {
+                        ...user,
+                        ...action.payload
+                    };
+                }
+            });
+            case 'DELETE':
+                return state.filter(user => user.id !== action.id);
         default:
             return state;
     }

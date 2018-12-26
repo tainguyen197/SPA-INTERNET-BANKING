@@ -39,7 +39,7 @@ class Dashboard extends React.Component {
                     </div >
                    <div className = "menu-content">
                     <Menu></Menu>
-                    <div class="col-md-12 menu-line-cross"></div>
+                    <div className="col-md-12 menu-line-cross"></div>
                    </div>
                     <div className="dashboard-body">
                         <Route  path="/receiver" component={ListReceiver}></Route>
