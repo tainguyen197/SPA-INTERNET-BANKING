@@ -1,0 +1,1 @@
+const DECREASE_BALANCES = 1;
