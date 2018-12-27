@@ -9,7 +9,7 @@ import 'bootstrap3/dist/css/bootstrap-theme.min.css';
 import {createStore  } from 'redux';
 import {Provider} from 'react-redux';
 import * as action from './actions/availableBalances';
-import rootReducer from './reducers/avaiableBalances';
+import rootReducer from './reducers/rootReducers';
 
 //initialState
 const initialState = []
@@ -18,14 +18,14 @@ const initialState = []
 const store = createStore(rootReducer,initialState);
 
 store.subscribe(() => {
-    console.log(store.getState());
+    //console.log(store.getState());
 })
 
-store.dispatch(action.DECREASE_BALANCES({name: 'b', age: 23,job:'nojob'}))
-store.dispatch(action.DECREASE_BALANCES({name: 'c', age: 23}))
-store.dispatch(action.DECREASE_BALANCES({name: 'd', age: 23}))
-store.dispatch(action.INCREASE_BALANCES({id: 2, age: 24}))
-store.dispatch(action.DELETE(2))
+// store.dispatch(action.DECREASE_BALANCES({name: 'b', age: 23,job:'nojob'}))
+// store.dispatch(action.DECREASE_BALANCES({name: 'c', age: 23}))
+// store.dispatch(action.DECREASE_BALANCES({name: 'd', age: 23}))
+// store.dispatch(action.INCREASE_BALANCES({id: 2, age: 24}))
+// store.dispatch(action.DELETE(2))
 
 ReactDOM.render(
     <Provider store = {store}>

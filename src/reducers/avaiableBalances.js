@@ -7,7 +7,8 @@ const initialState = [{
 }]
 
 let id = 0;
-export default function changeBalances(state, action) {
+export default function changeBalances(state = initialState, action) {
+    console.log('changeBalances');
     switch (action.type) {
         case 'DECREASE_BALANCES':
             return [

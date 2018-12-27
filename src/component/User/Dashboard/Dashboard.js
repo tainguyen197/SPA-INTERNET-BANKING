@@ -8,7 +8,8 @@ import Menu from '../Menu/Menu';
 import { Route, HashRouter } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {bindActionCreators } from 'redux'
-import * as ChangeBalancesAction from '../../../actions/availableBalances'
+import * as userActions from '../../../actions/userActions'
+import * as BalancesAction from '../../../actions/availableBalances'
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -20,11 +21,13 @@ class Dashboard extends React.Component {
     }
 
     test(){
-        //console.log(actions);
+        console.log('a');
+        this.props.actions1();
+        console.log('avaiableBalaces',this.props.avaiableBalaces);
     }
 
     componentDidMount(){
-       
+       console.log();
     }
 
     render() {
@@ -34,7 +37,7 @@ class Dashboard extends React.Component {
                 <div >
                     <div className="dashboard-header">
                         <img className="icon-avatar"></img>
-                        <div className="usernam-lable">Xin chào, Nguyễn Trung Tài</div>
+                        <div onClick = {this.test} className="usernam-lable">Xin chào, Nguyễn Trung Tài</div>
                         
                     </div >
                    <div className = "menu-content">
@@ -52,15 +55,16 @@ class Dashboard extends React.Component {
     }
 }
 
+
 var mapStateToProps = (state) => {
     return {
-        avaiableBalaces: state.avaiableBalacesReducer
+        avaiableBalaces: state
     };
 }
-
 var mapDispatchToProps = (dispatch)  => {
     return {
-        actions: bindActionCreators(ChangeBalancesAction, dispatch)
+        actions: bindActionCreators(userActions.UPDATE_USER_INFO, dispatch),
+        actions1:  bindActionCreators(BalancesAction.DECREASE_BALANCES, dispatch)
     };
 }
 

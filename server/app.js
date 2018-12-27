@@ -4,6 +4,7 @@ var express = require('express'),
     cors = require('cors');
 
 var UserController = require('./apiControllers/userController');
+var LoginController = require('./apiControllers/loginController');
 
 var app = express();
 
@@ -17,7 +18,8 @@ app.get('/', (req, res) => {
     })
 });
 
-app.use('/api/user/', UserController);
+app.use('/user', UserController);
+app.use('/login', LoginController);
 
 var port = process.env.PORT || 4000;
 app.listen(port, () => {

@@ -12,8 +12,8 @@ class ListAccount extends Component {
     }
 
     TransactionMoney() {
-    console.log(this.props.actions);
-    console.log(this.props.avaiableBalaces);
+        console.log(this.props.actions);
+        console.log(this.props.avaiableBalaces);
     }
 
 
