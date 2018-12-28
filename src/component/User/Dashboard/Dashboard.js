@@ -16,28 +16,36 @@ class Dashboard extends React.Component {
         super(props);
         this.test = this.test.bind(this);
         this.state = {
-            isMoveMoneyModal: true
+            isMoveMoneyModal: true,
+            nameAccount: undefined
         }
     }
 
     test(){
         console.log('a');
-        this.props.actions1();
-        console.log('avaiableBalaces',this.props.avaiableBalaces);
+        //this.props.actions1();
+        console.log('avaiableBalaces',this.props.state);
     }
 
     componentDidMount(){
-       console.log();
+       console.log(this.props.state);
+       this.setState({
+           nameAccount: this.props.state.userReducer[0].HoTen
+       })
     }
 
     render() {
-        const {avaiableBalaces, actions} = this.props;
+        const {state, actions} = this.props;
+        var userState = state.userReducer;
+        var userListAccount = state.UserListAccountReducer;
+        console.log(userState[0].HoTen);
+        
         return (
             <HashRouter>
                 <div >
                     <div className="dashboard-header">
                         <img className="icon-avatar"></img>
-                        <div onClick = {this.test} className="usernam-lable">Xin chào, Nguyễn Trung Tài</div>
+                        <div onClick = {this.test} className="usernam-lable">Xin chào, {userState[0].HoTen}</div>
                         
                     </div >
                    <div className = "menu-content">
@@ -46,7 +54,7 @@ class Dashboard extends React.Component {
                    </div>
                     <div className="dashboard-body">
                         <Route  path="/receiver" component={ListReceiver}></Route>
-                        <Route  path="/account" render={props => <ListAccount actions = {actions} avaiableBalaces = {avaiableBalaces}  />}></Route>
+                        <Route  path="/account" component={ListAccount} ></Route>
                         <Route  path="/transaction" component={Transaction}></Route>
                     </div>
                 </div>
@@ -58,7 +66,7 @@ class Dashboard extends React.Component {
 
 var mapStateToProps = (state) => {
     return {
-        avaiableBalaces: state
+        state: state
     };
 }
 var mapDispatchToProps = (dispatch)  => {

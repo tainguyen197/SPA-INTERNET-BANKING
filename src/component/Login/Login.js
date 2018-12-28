@@ -7,7 +7,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as UserAction from '../../actions/userActions'
 import * as BalancesAction from '../../actions/availableBalances'
-import * as userListAccount from '../../actions/userListAccountActions'
+import * as userListAccount from '../../actions/userAccountActions'
+import { Redirect} from 'react-router-dom'
 
 class LoginComponent extends Component {
     constructor(props) {
@@ -19,6 +20,7 @@ class LoginComponent extends Component {
         this.state = {
             username: '',
             password: '',
+            redirectTo: null,
         }
     }
 
@@ -41,6 +43,7 @@ class LoginComponent extends Component {
                         }).then(data => {
                             var userInfo = data[0];
                             this.props.updateUserAction(userInfo);
+                            console.log(this.props.state);
                         })
                         
                     //lấy thông tin userListAccount lưu vào store
@@ -55,10 +58,16 @@ class LoginComponent extends Component {
                             this.props.userListAccountAction(element);
 
                         }); 
-                        console.log(this.props.state);
+                        
                     })
 
-                    //return  this.props.history.push('/home#/account');
+                    this.props.history.push('/home#/account');
+
+                    this.setState({
+                        redirectTo: '/home#/account',
+                    })
+                    return 
+                    //
                 }
             }
             )
@@ -77,6 +86,10 @@ class LoginComponent extends Component {
     }
 
     render() {
+        if(this.state.redirectTo){
+            //return <Redirect to = {{pathname: this.state.redirectTo}}/>
+        }
+        else{
         return (
             <div className="container-fluid login-content">
                 <div className="center-login">
@@ -115,6 +128,7 @@ class LoginComponent extends Component {
                 </div>
             </div>
         );
+        }
     }
 }
 
