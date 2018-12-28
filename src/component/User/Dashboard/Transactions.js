@@ -1,92 +1,45 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-class Transaction extends Component{
-    render(){
-        return(
-                <div>
-                    <div className="center-list-transaction-label">
-                        <div className="col-md-6">Danh sách giao dịch</div>                       
-                        <div className="col-md-12 home-line-cross"></div>
-                        <br></br>
-                    </div>
-    
+class Transaction extends Component {
+    render() {
+        var { state } = this.props;
+        var {accountNumber} = this.props;
+        return (
+            <div>
+                <div className="center-list-transaction-label">
+                    <div className="col-md-6">Danh sách giao dịch</div>
+                    <div className="col-md-12 home-line-cross"></div>
                     <br></br>
-                    <br></br>
-                    <div onClick={this.addNew} className="center-list-receiver">
-                        <div className="col-md-1 icon-avatar-receiver "></div>
-                        <div className="col-md-8">
-                            <div className="name-account-transaction">Chuyển tiền</div>
-                            <div>14:20 Thứ 6, Ngày 14 tháng 12</div>
-                        </div>
-                        <div className="col-md-2 account-transaction-right-content">
-                            <div className = "name-account-transaction-number">- 7.000</div>
-                            <div  className = "account-transaction-wallet">3.567.323</div>
-                        </div>
-    
-                    </div>
-                    <div onClick={this.addNew} className="center-list-receiver">
-                        <div className="col-md-1 icon-avatar-receiver "></div>
-                        <div className="col-md-8">
-                            <div className="name-account-transaction">Chuyển tiền</div>
-                            <div>14:20 Thứ 6, Ngày 14 tháng 12</div>
-                        </div>
-                        <div className="col-md-2 account-transaction-right-content">
-                            <div className = "name-account-transaction-number">- 7.000</div>
-                            <div  className = "account-transaction-wallet">3.567.323</div>
-                        </div>
-    
-                    </div>
-                    <div onClick={this.addNew} className="center-list-receiver">
-                        <div className="col-md-1 icon-avatar-receiver "></div>
-                        <div className="col-md-8">
-                            <div className="name-account-transaction">Chuyển tiền</div>
-                            <div>14:20 Thứ 6, Ngày 14 tháng 12</div>
-                        </div>
-                        <div className="col-md-2 account-transaction-right-content">
-                            <div className = "name-account-transaction-number">- 7.000</div>
-                            <div  className = "account-transaction-wallet">3.567.323</div>
-                        </div>
-    
-                    </div>
-                    <div onClick={this.addNew} className="center-list-receiver">
-                        <div className="col-md-1 icon-avatar-receiver "></div>
-                        <div className="col-md-8">
-                            <div className="name-account-transaction">Chuyển tiền</div>
-                            <div>14:20 Thứ 6, Ngày 14 tháng 12</div>
-                        </div>
-                        <div className="col-md-2 account-transaction-right-content">
-                            <div className = "name-account-transaction-number">- 7.000</div>
-                            <div  className = "account-transaction-wallet">3.567.323</div>
-                        </div>
-    
-                    </div>
-                    <div onClick={this.addNew} className="center-list-receiver">
-                        <div className="col-md-1 icon-avatar-receiver "></div>
-                        <div className="col-md-8">
-                            <div className="name-account-transaction">Chuyển tiền</div>
-                            <div>14:20 Thứ 6, Ngày 14 tháng 12</div>
-                        </div>
-                        <div className="col-md-2 account-transaction-right-content">
-                            <div className = "name-account-transaction-number">- 7.000</div>
-                            <div  className = "account-transaction-wallet">3.567.323</div>
-                        </div>
-    
-                    </div>
-                    <div onClick={this.addNew} className="center-list-receiver">
-                        <div className="col-md-1 icon-avatar-receiver "></div>
-                        <div className="col-md-8">
-                            <div className="name-account-transaction">Chuyển tiền</div>
-                            <div>14:20 Thứ 6, Ngày 14 tháng 12</div>
-                        </div>
-                        <div className="col-md-2 account-transaction-right-content">
-                            <div className = "name-account-transaction-number">- 7.000</div>
-                            <div  className = "account-transaction-wallet">3.567.323</div>
-                        </div>
-    
-                    </div>
-
                 </div>
-            )
+                <br></br>
+                <br></br>
+                {state.map(transaction => {
+                    if (transaction.Type !== undefined && transaction.AccountNumber === accountNumber)
+                        return (
+                            <div onClick={this.addNew} className="center-list-receiver">
+                                <div className="col-md-1 icon-avatar-receiver "></div>
+                                <div className="col-md-8">
+                                    <div className="name-account-transaction">Chuyển tiền</div>
+                                    <div>{transaction.Time}</div>
+                                </div>
+                                <div className="col-md-2 account-transaction-right-content">
+                                    <div className="name-account-transaction-number">- {transaction.MoneyTransaction}</div>
+                                    <div className="account-transaction-wallet">{transaction.MoneyBalance}</div>
+                                </div>
+                            </div>
+                        )
+                })}
+            </div>
+        )
     }
 }
-export default Transaction;
+
+var mapStateToProps = (state) => {
+    return {
+        state: state.userAccountTracsactionReducer
+    };
+}
+
+
+export default connect(mapStateToProps, null)(Transaction);

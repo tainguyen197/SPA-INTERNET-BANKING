@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux'
 import * as UserAction from '../../actions/userActions'
 import * as BalancesAction from '../../actions/availableBalances'
 import * as userListAccount from '../../actions/userAccountActions'
-import { Redirect} from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 class LoginComponent extends Component {
     constructor(props) {
@@ -43,30 +43,42 @@ class LoginComponent extends Component {
                         }).then(data => {
                             var userInfo = data[0];
                             this.props.updateUserAction(userInfo);
-                            console.log(this.props.state);
+                            //console.log(this.props.state);
                         })
-                        
+
                     //lấy thông tin userListAccount lưu vào store
                     var req = "http://localhost:4000/user/loadUserAccountsById?id=" + userID;
                     axios.get(req)
-                    .then(result => {
-                        return result.data;
-                    }).then(data => {
-                        var userListAccount = data;
+                        .then(result => {
+                            return result.data;
+                        }).then(data => {
+                            var userListAccount = data;
 
-                        userListAccount.forEach(element => {
-                            this.props.userListAccountAction(element);
+                            userListAccount.forEach(element => {
+                                this.props.userListAccountAction(element);
+                                console.log('element',element);
+                                //lấy thông tin giao dịch của các tài khoản
+                                var req = "http://localhost:4000/user/loadUserTransactionsById/?numberAccount=" + element.NumberAccount;
+                                axios.get(req)
+                                    .then(data => {
+                                        return data.data;
+                                    }).then(transactions => {
+                                        console.log('transacion',transactions);
+                                        transactions.map(transaction => {
+                                            this.props.userAccountAction(transaction);
+                                        })
+                                    })
+                            });
 
-                        }); 
-                        
-                    })
+                        })
+
 
                     this.props.history.push('/home#/account');
 
                     this.setState({
                         redirectTo: '/home#/account',
                     })
-                    return 
+                    return
                     //
                 }
             }
@@ -86,48 +98,48 @@ class LoginComponent extends Component {
     }
 
     render() {
-        if(this.state.redirectTo){
+        if (this.state.redirectTo) {
             //return <Redirect to = {{pathname: this.state.redirectTo}}/>
         }
-        else{
-        return (
-            <div className="container-fluid login-content">
-                <div className="center-login">
-                    <div className="left-login hidden-xs">
-                        <label className="login-title">Hãy tham gia</label>
-                        <p className="join-us-desc">Ngân hàng số thế hệ mới đã có mặt! Tiên phong trải nghiệm ngay hôm nay!</p>
-                        <button className="buttonTransparent">Tham gia ngay</button>
-                    </div>
-                    <div className="right-login">
-                        <div className="login_form">
-                            <div className="content-input">
-                                <div className="form-group">
-                                    <div>
-                                        <input onChange={this.updateUsername} type="text" className="form-control input-kyc" id="usernameTxt" name="username" maxlength="25" placeholder="Tên đăng nhập" required="" fix-ie-only="" focus-me="" float-labels="" autocomplete="off" restrict-special-character="a-z0-9A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂưăạảấầẩẫậắằẳẵặẹẻẽếềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ" convert-vietnamese-character="true"></input>
+        else {
+            return (
+                <div className="container-fluid login-content">
+                    <div className="center-login">
+                        <div className="left-login hidden-xs">
+                            <label className="login-title">Hãy tham gia</label>
+                            <p className="join-us-desc">Ngân hàng số thế hệ mới đã có mặt! Tiên phong trải nghiệm ngay hôm nay!</p>
+                            <button className="buttonTransparent">Tham gia ngay</button>
+                        </div>
+                        <div className="right-login">
+                            <div className="login_form">
+                                <div className="content-input">
+                                    <div className="form-group">
+                                        <div>
+                                            <input onChange={this.updateUsername} type="text" className="form-control input-kyc" id="usernameTxt" name="username" maxlength="25" placeholder="Tên đăng nhập" required="" fix-ie-only="" focus-me="" float-labels="" autocomplete="off" restrict-special-character="a-z0-9A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂưăạảấầẩẫậắằẳẵặẹẻẽếềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ" convert-vietnamese-character="true"></input>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="form-group">
-                                    <div>
-                                        <input onChange={this.updatePassword} type="text" className="form-control input-kyc" id="passwordTxt" name="password" maxlength="25" placeholder="Mật khẩu" required="" fix-ie-only="" focus-me="" float-labels="" autocomplete="off" restrict-special-character="a-z0-9A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂưăạảấầẩẫậắằẳẵặẹẻẽếềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ" convert-vietnamese-character="true"></input>
+                                    <div className="form-group">
+                                        <div>
+                                            <input onChange={this.updatePassword} type="text" className="form-control input-kyc" id="passwordTxt" name="password" maxlength="25" placeholder="Mật khẩu" required="" fix-ie-only="" focus-me="" float-labels="" autocomplete="off" restrict-special-character="a-z0-9A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂưăạảấầẩẫậắằẳẵặẹẻẽếềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ" convert-vietnamese-character="true"></input>
+                                        </div>
                                     </div>
+                                    <div className="form-group">
+                                        <ReCAPTCHA
+                                            sitekey="6LcTM4EUAAAAAA1fBzaH1PA55UTDLkRDKVV-PshC"
+                                        />,
                                 </div>
-                                <div className="form-group">
-                                    <ReCAPTCHA
-                                        sitekey="6LcTM4EUAAAAAA1fBzaH1PA55UTDLkRDKVV-PshC"
-                                    />,
-                                </div>
-                                <div className="form-group">
-                                    <button onClick={this.submidLogin} className="btn btn-default-green btn-kyc buttonPurple ">
-                                        <span>Đăng nhập</span>
-                                    </button>
-                                </div>
+                                    <div className="form-group">
+                                        <button onClick={this.submidLogin} className="btn btn-default-green btn-kyc buttonPurple ">
+                                            <span>Đăng nhập</span>
+                                        </button>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
         }
     }
 }
@@ -140,7 +152,8 @@ var mapStateToProps = (state) => {
 var mapDispatchToProps = (dispatch) => {
     return {
         updateUserAction: bindActionCreators(UserAction.UPDATE_USER_INFO, dispatch),
-        userListAccountAction: bindActionCreators(userListAccount.USER_LIST_ACCOUNT, dispatch)
+        userListAccountAction: bindActionCreators(userListAccount.USER_LIST_ACCOUNT, dispatch),
+        userAccountAction: bindActionCreators(userListAccount.USER_ACCOUNT_TRANSACTIONS, dispatch)
     };
 }
 

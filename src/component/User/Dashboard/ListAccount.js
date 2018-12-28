@@ -15,16 +15,14 @@ class ListAccount extends Component {
         this.showTransaction = this.showTransaction.bind(this);
     }
 
-    showTransaction(){
-        var req = "http://localhost:4000/user/loadUserTransactionsById/?numberAccount="
-        
-        axios.get()
+    showTransaction(e, account){
+        this.props.onSelectAccountNumber(account);
     }
 
     customBalance = (number) => {
         console.log(number);
             var numberAccount = number.toString();
-            console.log(numberAccount);
+            //console.log(numberAccount);
 
             if (number) {
                 var array = [];
@@ -37,7 +35,7 @@ class ListAccount extends Component {
                 if (numberAccount.length > 0)
                     array[i] = numberAccount.substr(0, numberAccount.length);
 
-                console.log(array);
+                //console.log(array);
                 var result = null;
 
                 result = array[array.length - 1] + '.';
@@ -74,7 +72,7 @@ class ListAccount extends Component {
                                     <div className="col-md-1 wallet-icon timo-spendaccounticon"></div>
                                     <div className="col-md-3 ">
                                         <div className="wallet-transaction">{CustomBalance}</div>
-                                        <div onClick = {this.showTransaction}><NavLink className="link btn-menu" to="/transaction">Xem các giao dịch </NavLink></div>
+                                        <div onClick = {e => this.showTransaction(e, account)}><NavLink className="link btn-menu" to="/transaction">Xem các giao dịch </NavLink></div>
                                     </div>
                                     <div className="col-md-3 move-money-label">Chuyển tiền<Glyphicon glyph="glyphicon glyphicon-transfer" className="glyph-menu"></Glyphicon></div>
                                 </div>
