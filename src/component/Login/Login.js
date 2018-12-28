@@ -34,6 +34,16 @@ class LoginComponent extends Component {
                     window.alert('Sai tên đăng nhập hoặc tài khoản');
                 }
                 else {
+                     //lấy thông tin user receiver lưu vào store
+                     var userID = data[0].IDUser;
+                     var req = "http://localhost:4000/user/loadUserReceiverById/?id=" + userID;
+                     axios.get(req)
+                         .then(result => {
+                             return result.data;
+                         }).then(data => {
+                             var userReceiver = data[0];
+                             this.props.userReicerverAction(userReceiver);
+                         })
                     //lấy thông tin user lưu vào store
                     var userID = data[0].IDUser;
                     var req = "http://localhost:4000/user/loadUserInfoById/?id=" + userID;
@@ -153,7 +163,8 @@ var mapDispatchToProps = (dispatch) => {
     return {
         updateUserAction: bindActionCreators(UserAction.UPDATE_USER_INFO, dispatch),
         userListAccountAction: bindActionCreators(userListAccount.USER_LIST_ACCOUNT, dispatch),
-        userAccountAction: bindActionCreators(userListAccount.USER_ACCOUNT_TRANSACTIONS, dispatch)
+        userAccountAction: bindActionCreators(userListAccount.USER_ACCOUNT_TRANSACTIONS, dispatch),
+        userReicerverAction: bindActionCreators(userListAccount.USER_ACCOUNT_RECEIVER, dispatch),
     };
 }
 

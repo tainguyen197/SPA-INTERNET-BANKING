@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import MoveMoneyModel from '../MoveMoney'
-
-
+import { connect } from 'react-redux'
 
 
 class ListReceiver extends Component {
@@ -31,6 +30,8 @@ class ListReceiver extends Component {
     }
 
     render() {
+        var { state } = this.props;
+
         return (
             <div>
                 <div className="center-list-receiver-label">
@@ -44,59 +45,26 @@ class ListReceiver extends Component {
 
                 <br></br>
                 <br></br>
-                <div onClick={this.addNew} className="center-list-receiver">
-                    <div className="col-md-1 icon-avatar-receiver "></div>
-                    <div className="col-md-10">
-                        <div className=" name-account-receiver">Nguyen Van A</div>
-                        <div>27462764273423</div>
-                    </div>
+                {state.map(receiver => {
+                    if (receiver.ID !== undefined) {
+                        return (
+                            <div onClick={this.addNew} className="center-list-receiver">
+                                <div className="col-md-1 icon-avatar-receiver "></div>
+                                <div className="col-md-10">
+                                    <div className=" name-account-receiver">{receiver.Name}</div>
+                                    <div>{receiver.Account}</div>
+                                </div>
 
-                </div>
-                <div className="center-list-receiver">
-                    <div className="col-md-1 icon-avatar-receiver "></div>
-                    <div className="col-md-10">
-                        <div className=" name-account-receiver">Nguyen Van A</div>
-                        <div>27462764273423</div>
-                    </div>
+                            </div>
+                        )
+                    }
+                })}
 
-                </div>
-                <div className="center-list-receiver">
-                    <div className="col-md-1 icon-avatar-receiver "></div>
-                    <div className="col-md-10">
-                        <div className=" name-account-receiver">Nguyen Van A</div>
-                        <div>27462764273423</div>
-                    </div>
 
-                </div>
-                <div onClick={this.addNew} className="center-list-receiver">
-                    <div className="col-md-1 icon-avatar-receiver "></div>
-                    <div className="col-md-10">
-                        <div className=" name-account-receiver">Nguyen Van A</div>
-                        <div>27462764273423</div>
-                    </div>
-
-                </div>
-                <div onClick={this.addNew} className="center-list-receiver">
-                    <div className="col-md-1 icon-avatar-receiver "></div>
-                    <div className="col-md-10">
-                        <div className=" name-account-receiver">Nguyen Van A</div>
-                        <div>27462764273423</div>
-                    </div>
-
-                </div>
-                <div onClick={this.addNew} className="center-list-receiver">
-                    <div className="col-md-1 icon-avatar-receiver "></div>
-                    <div className="col-md-10">
-                        <div className=" name-account-receiver">Nguyen Van A</div>
-                        <div>27462764273423</div>
-                    </div>
-
-                </div>
                 <div>
                     {this.state.isModelShow && <MoveMoneyModel
-                        hindModal = {this.hindModal}
+                        hindModal={this.hindModal}
                     >
-
                     </MoveMoneyModel>}
                 </div>
             </div>
@@ -104,6 +72,10 @@ class ListReceiver extends Component {
     }
 }
 
+var mapStateToProps = (state) => {
+    return {
+        state: state.UserReceiverReducer
+    };
+}
 
-
-export default ListReceiver;
+export default connect(mapStateToProps, null)(ListReceiver);

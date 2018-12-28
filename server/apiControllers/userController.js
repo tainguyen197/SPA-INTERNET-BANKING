@@ -1,10 +1,10 @@
 var express = require('express');
-var productRepo = require('../repos/userRepo');
+var userRepo = require('../repos/userRepo');
 
 var router = express.Router();
 
 router.get('/', (req, res) => {
-	productRepo.loadAll()
+	userRepo.loadAll()
 		.then(rows => {
 			res.json(rows);
 		}).catch(err => {
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 router.get('/loadUserInfoById',(req,res) =>{
 	var idUser = req.query.id;
-	productRepo.loadUserInfoById(idUser)
+	userRepo.loadUserInfoById(idUser)
 	.then(rows => {
 		res.json(rows);
 	}).catch(err =>{
@@ -28,7 +28,19 @@ router.get('/loadUserInfoById',(req,res) =>{
 
 router.get('/loadUserTransactionsById',(req,res) =>{
 	var numberAccount = req.query.numberAccount;
-	productRepo.loadUserTransactionsById(numberAccount)
+	userRepo.loadUserTransactionsById(numberAccount)
+	.then(rows => {
+		res.json(rows);
+	}).catch(err =>{
+		console.log(err);
+		res.status = 500;
+		res.end('View error log on console');
+	})
+})
+
+router.get('/loadUserReceiverById',(req,res) =>{
+	var Id = req.query.id;
+	userRepo.loadUserReceiverById(Id)
 	.then(rows => {
 		res.json(rows);
 	}).catch(err =>{
@@ -41,7 +53,7 @@ router.get('/loadUserTransactionsById',(req,res) =>{
 
 router.get('/loadUserAccountsById',(req,res) =>{
 	var idUser = req.query.id;
-	productRepo.loadUserAccountsById(idUser)
+	userRepo.loadUserAccountsById(idUser)
 	.then(rows => {
 		res.json(rows);
 	}).catch(err =>{

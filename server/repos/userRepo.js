@@ -10,6 +10,12 @@ exports.loadUserAccountsById = (id) =>{
 	return db.load(sql);
 }
 
+exports.loadUserReceiverById = (id) =>{
+	var sql = 'select * from receiver_account where IDUser= '+ id;
+	return db.load(sql);
+}
+
+
 exports.loadUserInfoById = (id) =>{
 	var sql = 'select * from user where ID= '+ id;
 	return db.load(sql);
