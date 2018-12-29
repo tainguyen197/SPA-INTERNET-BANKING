@@ -10,11 +10,16 @@ class ListReceiver extends Component {
         this.addNew = this.addNew.bind(this);
         this.showinfo = this.showinfo.bind(this);
         this.state = {
-            isModelShow: false
+            isModelShow: false,
+            receiverInfo: undefined
         }
     }
-    showinfo = () => {
-        window.alert('a');
+    showinfo = (e, receiver) => {
+        this.setState({
+            receiverInfo: receiver
+        })
+
+        this.addNew();
     }
 
     hindModal = () => {
@@ -48,7 +53,7 @@ class ListReceiver extends Component {
                 {state.map(receiver => {
                     if (receiver.ID !== undefined) {
                         return (
-                            <div onClick={this.addNew} className="center-list-receiver">
+                            <div onClick={e => this.showinfo(e,receiver)} className="center-list-receiver">
                                 <div className="col-md-1 icon-avatar-receiver "></div>
                                 <div className="col-md-10">
                                     <div className=" name-account-receiver">{receiver.Name}</div>
@@ -62,8 +67,9 @@ class ListReceiver extends Component {
 
 
                 <div>
-                    {this.state.isModelShow && <MoveMoneyModel
+                    {this.state.isModelShow && < MoveMoneyModel 
                         hindModal={this.hindModal}
+                        receiverInfo = {this.state.receiverInfo}
                     >
                     </MoveMoneyModel>}
                 </div>
