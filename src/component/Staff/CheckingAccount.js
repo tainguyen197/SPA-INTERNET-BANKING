@@ -30,13 +30,24 @@ class Menu extends Component {
     handleSubmit(event) {
         event.preventDefault();
         alert(this.state.username);
-        axios.post('/create', { values: this.state.name, ages: this.state.age })
+        {/*axios.post('/create', { values: this.state.name, ages: this.state.age })
             .then(function (response) {
                 console.log(response);
-            })
-        this.setState({
-            username: '',
-        })
+            })*/}
+        var req = "http://localhost:4000/user-account/create-checking-account/?username=" + this.state.username;
+        axios.get(req).then(result => {
+            return result.data;
+        }).then(data => {
+            if (data.length === 0) {
+                window.alert('Tạo tài khoản thanh toán cho khách hàng ' + this.state.username +' thất bại. Vui lòng thử lại.');
+            }
+            else{
+                window.alert('Tạo tài khoản thanh toán cho khách hàng ' + this.state.username +' thành công.');
+                this.setState({
+                    username: ''
+                })
+            }
+        });
     }
 
     render() {

@@ -33,18 +33,30 @@ class Menu extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        alert(this.state.username+ ' '+  this.state.password+ ' '+ this.state.name+ ' '+ this.state.email+ ' '+ this.state.phone+ ' ');
+        {/*alert(this.state.username+ ' '+  this.state.password+ ' '+ this.state.name+ ' '+ this.state.email+ ' '+ this.state.phone+ ' ');
         axios.post('/create', { values: this.state.name, ages: this.state.age })
             .then(function (response) {
                 console.log(response);
-            })
-        this.setState({
-            username: '',
-            password: '',
-            name: '',
-            email: '',
-            phone: ''
-        })
+            })*/}
+            var req = "http://localhost:4000/user-account/create-user-account/?username=" + this.state.username + "&password=" + this.state.password
+                + "&name=" + this.state.name + "&email=" + this.state.email + "&phone=" + this.state.phone;
+            axios.get(req).then(result => {
+                return result.data;
+            }).then(data => {
+                if (data.length === 0) {
+                    window.alert('Tạo tài khoản khách hàng thất bại. Vui lòng thử lại.');
+                }
+                else{
+                    this.setState({
+                        username: '',
+                        password: '',
+                        name: '',
+                        email: '',
+                        phone: ''
+                    })
+                    window.alert('Tạo tài khách hàng khoản thành công.');
+                }
+            });
     }
 
     render() {
