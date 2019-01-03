@@ -1,9 +1,17 @@
-import React, { Component } from 'react'
-import { Glyphicon } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
-import Menu from './Menu';
+import React from 'react';
+import '../style/dashboard.css'
 
-class Home extends Component {
+import ListAccount from './ListAccount';
+import ListReceiver from './ListReceiver';
+import Transaction from './Transactions';
+import Menu from './Menu';
+import { Route, HashRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+//import * as userActions from '../../../actions/userActions'
+//import * as BalancesAction from '../../../actions/availableBalances'
+
+class Dashboard extends React.Component {
     constructor(props) {
         super(props);
         this.selectAccount = this.selectAccount.bind(this);
@@ -27,29 +35,35 @@ class Home extends Component {
         })
     }
 
-
     render() {
         const { state, actions } = this.props;
         var userState = state.userReducer;
         var userListAccount = state.UserListAccountReducer;
         console.log(userState[0].HoTen);
-        
+
         return (
-            <div className="center-menu">
-                <div className="dashboard-header">
-                    <img className="icon-avatar"></img>
-                    <div onClick={this.test} className="usernam-lable">Xin chào, {userState[0].HoTen}</div>
+            <HashRouter>
+                <div >
+                    <div className="dashboard-header">
+                        <img className="icon-avatar"></img>
+                        <div onClick={this.test} className="usernam-lable">Xin chào, {userState[0].HoTen}</div>
 
-                </div >
-                <div className="menu-content">
-                    <Menu></Menu>
-                    <div className="col-md-12 menu-line-cross"></div>
+                    </div >
+                    <div className="menu-content">
+                        <Menu></Menu>
+                        <div className="col-md-12 menu-line-cross"></div>
+                    </div>
+                    <div className="dashboard-body">
+                        <Route path="/receiver" component={ListReceiver}></Route>
+                        <Route path="/account" render={() => <ListAccount onSelectAccountNumber={this.selectAccount} />}></Route>
+                        <Route path="/transaction" render={() => <Transaction accountNumber={this.state.accountNumber} />}></Route>
+                    </div>
                 </div>
-            </div>
-
+            </HashRouter>
         )
     }
 }
+
 
 var mapStateToProps = (state) => {
     return {
@@ -63,4 +77,4 @@ var mapDispatchToProps = (dispatch) => {
     };
 }
 
-export default Home;
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
