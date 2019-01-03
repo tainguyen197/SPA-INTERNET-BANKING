@@ -21,8 +21,23 @@ exports.loadUserInfoById = (id) =>{
 	return db.load(sql);
 }
 
-exports.loadUserTransactionsById = (numberAccount) =>{
-	var sql = 'select * from history where AccountNumber = '+ numberAccount;
+exports.loadUserInfoByNumberAccount = (numberAccount) =>{
+	var sql = 'select user.HoTen, user_balances.Balance from user,user_balances where user_balances.IDUser = user.ID and  user_balances.NumberAccount= '+ numberAccount;
 	return db.load(sql);
 }
 
+exports.loadUserTransactionsById = (numberAccount) =>{
+	var sql = 'select * from history where AccountNumberFrom = '+ numberAccount;
+	return db.load(sql);
+}
+
+exports.updateBalance = (numberAccount, money) => {
+	var sql = 'UPDATE user_balances SET Balance = '+ money + ' WHERE NumberAccount =' + numberAccount ;
+	console.log(sql);
+	return db.load(sql);
+}
+
+exports.newTransaction = (transaciton) =>{
+	var sql = "INSERT INTO history(ID,AccountNumberFrom,AccountNumberTo, Type, Time, MoneyTransaction, MoneyBalance) VALUES ("+ null + "," + transaciton.AccountNumberFrom + "," + transaciton.AccountNumberTo + ",'" + transaciton.Type + "','" + transaciton.Time + "'," + transaciton.	MoneyTransaction + "," + transaciton.	MoneyBalance +")" ;
+	return db.load(sql);
+}

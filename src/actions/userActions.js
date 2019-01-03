@@ -4,3 +4,11 @@ export function UPDATE_USER_INFO(payload){
         payload
     }
 }
+
+export function UPDATE_LIST_ACCOUNT(payload){
+    return{
+        type: 'UPDATE_LIST_ACCOUNT',
+        payload
+    }
+}
+

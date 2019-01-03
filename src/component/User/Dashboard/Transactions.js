@@ -15,7 +15,7 @@ class Transaction extends Component {
                 <br></br>
                 <br></br>
                 {state.map(transaction => {
-                    if (transaction.Type !== undefined && transaction.AccountNumber === accountNumber)
+                    if (transaction.Type !== undefined && transaction.AccountNumberFrom === accountNumber)
                         return (
                             <div onClick={this.addNew} className="center-list-receiver">
                                 <div className="col-md-1 icon-avatar-receiver "></div>
