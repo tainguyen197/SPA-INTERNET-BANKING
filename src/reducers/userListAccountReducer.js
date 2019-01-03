@@ -14,6 +14,9 @@ export default function UserReducer(state = initialState, action) {
                 {
                     ...action.payload
                 }];
+        case 'DELETE_ACCOUNT':
+        console.log('DELETE');
+                return state.filter(account => account.NumberAccount !== action.payload)
         case 'UPDATE_LIST_ACCOUNT':
             return state.map(account => {
                 if (account.NumberAccount !== action.payload.AccountNumberFrom && account.NumberAccount !== action.payload.AccountNumberTo) {

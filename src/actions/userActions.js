@@ -12,3 +12,9 @@ export function UPDATE_LIST_ACCOUNT(payload){
     }
 }
 
+export function DELETE_ACCOUNT(payload){
+    return{
+        type: 'DELETE_ACCOUNT',
+        payload
+    }
+}

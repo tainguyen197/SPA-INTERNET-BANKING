@@ -48,7 +48,7 @@ class Menu extends Component {
                 window.alert('Nạp ' + this.state.money + ' đồng cho khách hàng ' + this.state.id + ' thành công.');
                 this.setState({
                     id: '',
-                    money = ''
+                    money: ''
                 })
             }
         });
