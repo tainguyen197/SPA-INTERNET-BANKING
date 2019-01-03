@@ -3,7 +3,7 @@ import { Glyphicon } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import UserAccount from './UserAccount';
 import checkingAccount from './CheckingAccount';
-import { Route, HashRouter } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 const divstyle = {
     'background-color': 'rgba(255, 255, 255, 0)',
     'position': 'relative',

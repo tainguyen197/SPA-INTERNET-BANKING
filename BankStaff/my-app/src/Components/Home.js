@@ -1,13 +1,9 @@
 import React from 'react';
 import '../style/dashboard.css'
 
-import ListAccount from './ListAccount';
-import ListReceiver from './ListReceiver';
-import Transaction from './Transactions';
 import Menu from './Menu';
 import { Route, HashRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
 import createAccount from './CreateAccount';
 import recharge from './Recharge';
 //import * as userActions from '../../../actions/userActions'
@@ -20,9 +16,8 @@ const divposition = {
 } 
 
 const divposition1 = {
-    'background-color': 'rgba(255, 255, 255, 0)',
     'position': 'relative',
-    'top': '40px'
+    'top': '50px'
 } 
 
 
@@ -59,15 +54,14 @@ class Dashboard extends React.Component {
         return (
             <HashRouter>
                 <div >
-                    <div className="dashboard-header">
+                    <div>
+                        <Menu></Menu>
+                    </div>
+                    <div style={divposition1} className="dashboard-header">
                         <img className="icon-avatar"></img>
                         <div onClick={this.test} className="usernam-lable">Xin chào, {userState[0].HoTen}</div>
 
                     </div >
-                    <div style={divposition} className="menu-content">
-                        <Menu></Menu>
-                        <div className="col-md-12 menu-line-cross"></div>
-                    </div>
                     <div style={divposition1} className="dashboard-body">
                         <Route path="/create-account" component={createAccount}></Route>
                         <Route path="/recharge" component={recharge}></Route>

@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Glyphicon } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 
 const divstyle = {
@@ -33,11 +31,6 @@ class Menu extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        {/*alert(this.state.username+ ' '+  this.state.password+ ' '+ this.state.name+ ' '+ this.state.email+ ' '+ this.state.phone+ ' ');
-        axios.post('/create', { values: this.state.name, ages: this.state.age })
-            .then(function (response) {
-                console.log(response);
-            })*/}
             var req = "http://localhost:4000/user-account/create-user-account/?username=" + this.state.username + "&password=" + this.state.password
                 + "&name=" + this.state.name + "&email=" + this.state.email + "&phone=" + this.state.phone;
             axios.get(req).then(result => {

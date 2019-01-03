@@ -6,9 +6,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as UserAction from '../actions/userActions'
-import * as BalancesAction from '../actions/availableBalances'
 import * as userListAccount from '../actions/userAccountActions'
-import { Redirect } from 'react-router-dom'
 
 class LoginComponent extends Component {
     constructor(props) {

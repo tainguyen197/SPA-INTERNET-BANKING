@@ -1,7 +1,9 @@
 .dashboard-header{
     width: 100%;
     padding-bottom: 20px;
-    background: rgba(54,35,87,.8);
+    /*background-image: url(../images/logo-firstbank.jpg);*/
+    /*background: rgba(200, 177, 241, 0.1);*/
+    background-color: rgba(0,0,0,.7);
     position: block;
     border-radius: 2px;
     color: #FFF;
@@ -9,6 +11,9 @@
     box-shadow: -2px 0 20px 0 rgba(0,0,0,.4);
 }
 
+.menu-header{
+    background-image: url(../images/logo-firstbank.jpg);
+}
 .icon-avatar{
     border: 2px solid #fff;
     border-radius: 50%;
