@@ -9,7 +9,7 @@ import { Route, HashRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import createAccount from './CreateAccount';
-//import recharge from './Recharge';
+import recharge from './Recharge';
 //import * as userActions from '../../../actions/userActions'
 //import * as BalancesAction from '../../../actions/availableBalances'
 
@@ -17,6 +17,12 @@ const divposition = {
     'background-color': 'rgba(255, 255, 255, 0)',
     'position': 'relative',
     'top': '20px'
+} 
+
+const divposition1 = {
+    'background-color': 'rgba(255, 255, 255, 0)',
+    'position': 'relative',
+    'top': '40px'
 } 
 
 
@@ -62,9 +68,9 @@ class Dashboard extends React.Component {
                         <Menu></Menu>
                         <div className="col-md-12 menu-line-cross"></div>
                     </div>
-                    <div style={divposition} className="dashboard-body">
+                    <div style={divposition1} className="dashboard-body">
                         <Route path="/create-account" component={createAccount}></Route>
-                        {/*<Route path="/recharge" component={recharge}></Route>*/}
+                        <Route path="/recharge" component={recharge}></Route>
                     </div>
                     
                 </div>
