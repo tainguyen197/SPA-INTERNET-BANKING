@@ -7,8 +7,77 @@ import { bindActionCreators } from 'redux'
 import * as userAccounAction from '../../../actions/userAccountActions'
 import * as userAction from '../../../actions/userActions'
 import axios from 'axios'
-import {Button} from 'react-bootstrap'
-import {ToastContainer, ToastStore} from 'react-toasts';
+import { Button, Modal } from 'react-bootstrap'
+import Dropdown from 'react-dropdown'
+import { ToastContainer, ToastStore } from 'react-toasts';
+
+var selectedAccount;
+var selectedAccountBalance;
+class Account extends Component {
+
+    constructor(props) {
+        super(props);
+        this.goNext = this.goNext.bind(this);
+        this._onSelect = this._onSelect.bind(this);
+        this.state = {
+            selectedAccount: null,
+            balance: undefined,
+        }
+    }
+
+    _onSelect = (value) => {
+        selectedAccount = value.label
+        selectedAccountBalance = value.value;
+    }
+
+    goNext() {
+        this.props.hindModal();
+        var data = {
+            selectedAccount: selectedAccount,
+            balance: selectedAccountBalance
+        }
+        this.props.sendDataAccount(data);
+    }
+
+
+    render() {
+        var i = 0;
+        const { account, accountSelected } = this.props;
+        var options = [];
+        account.forEach(element => {
+            if (element.NumberAccount !== undefined && element.NumberAccount !== accountSelected) {
+                i++;
+                var option = { value: element.Balance, label: element.NumberAccount }
+                options.push(option);
+            }
+        });
+
+        return (
+            <Modal
+                show={true}
+                onHide={this.props.hindModal}
+            >
+                <Modal.Header>
+                    <Modal.Title>Chuyển tiền trong tài khoản của bạn</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>
+                    <div>
+                        <div className="form-move-money">
+                            <Dropdown options={options} onChange={this._onSelect} placeholder="Lựa chọn tài khoản" />
+                        </div>
+                    </div>
+                </Modal.Body>
+
+                <Modal.Footer>
+                    <Button onClick={this.props.hindModal}>Đóng</Button>
+                    <Button bsStyle="primary" onClick={this.goNext} >Tiếp tục</Button>
+                </Modal.Footer>
+            </Modal>
+        )
+    }
+}
+
 
 
 class ListAccount extends Component {
@@ -17,18 +86,57 @@ class ListAccount extends Component {
         this.customBalance = this.customBalance.bind(this);
         this.showTransaction = this.showTransaction.bind(this);
         this.deleteAccount = this.deleteAccount.bind(this);
+        this.getDataAccount = this.getDataAccount.bind(this);
+        this.hindModal = this.hindModal.bind(this);
+        this.state = {
+            AccountDelete: undefined,
+            AccountDeleteBalance: undefined,
+            AccountSelected: undefined,
+            showModel: false
+        }
     }
 
-    deleteAccount = (e, NumberAccount) =>{
-        var Verify;
-        if (window.confirm("Bạn chắc chắn muốn xóa tài khoản này?")) {
-            Verify = 1;
-          } else {
+    getDataAccount(data) {
+        var info = {
+            ID: undefined,
+            AccountNumberFrom: parseInt(this.state.AccountDelete),
+            AccountNumberTo: parseInt(data.selectedAccount),
+            Type: 'CHUYEN_TIEN',
+            Time: '14:20 Thứ 6, Ngày 19 tháng 12',
+            MoneyTransaction: parseInt(this.state.AccountDeleteBalance),
+            MoneyBalance: parseInt(this.state.AccountDeleteBalance),
+            MoneyBalanceReceiver: parseInt(data.balance),
+        }
+        this.props.Transaction(info);
+        //cập nhật tiền trong balance
+        var money = {
+            AccountNumberFrom: parseInt(this.state.AccountDelete),
+            AccountNumberTo: parseInt(data.selectedAccount),
+            MoneyTransaction: parseInt(this.state.AccountDeleteBalance),
+        }
+        this.props.UpdateBalance(money);
+        ToastStore.success("Đã xóa tài khoản thành công");
+        this.props.deleteAccount(parseInt(this.state.AccountDelete));
+    }
 
-          }
-        if(Verify === 1){
-            ToastStore.success("Đã xóa tài khoản thành công");
-            this.props.deleteAccount(parseInt(NumberAccount));
+    deleteAccount = (e, numberAccount, balance) => {
+        var Verify;
+        this.setState({
+            AccountDelete: numberAccount,
+            AccountDeleteBalance: balance
+        })
+
+        if (window.confirm("Bạn chắc chắn muốn xóa tài khoản này?")) {
+            if (balance > 0) { }
+            Verify = 1;
+            this.setState({
+                showModel: true
+            })
+        } else {
+
+        }
+        if (Verify === 1) {
+
         }
     }
 
@@ -66,33 +174,21 @@ class ListAccount extends Component {
     }
 
 
+    hindModal() {
+        this.setState({
+            showModel: false
+        })
+    }
+
     render() {
         var { state } = this.props;
         return (
             <div>
-                <ToastContainer position={ToastContainer.POSITION.BOTTOM_CENTER} store={ToastStore}/>
+                {this.state.showModel && <Account hindModal={this.hindModal} account={state} accountSelected={this.state.AccountDelete} sendDataAccount={this.getDataAccount}></Account>}
+                <ToastContainer position={ToastContainer.POSITION.BOTTOM_CENTER} lightBackground store={ToastStore} />
                 <br></br>
                 <br></br>
-                <div className="center-home">
-                                <div className="col-md-5">
-                                    <label className="account-mode">Tài khoản tín dụng</label>
-                                </div>
-                                <div className="col-md-7">
-                                    <label className="account-number">Số tài khoản: 123123123</label>
-                                </div>
-                                <div className="col-md-12 home-line-cross"></div>
-                                <div>
-                                    <div className="col-md-1 wallet-icon timo-spendaccounticon"></div>
-                                    <div className="col-md-3 ">
-                                        <div className="wallet-transaction">23234234</div>
-                                        <div    ><NavLink className="link btn-menu" to="/transaction">Xem các giao dịch </NavLink></div>
-                                    </div>
-                                    <div className="col-md-3 move-money-label">
-                                    <Button onClick = {this.deleteAccount}>Xóa tài khoản
 
-                                    </Button></div>
-                                </div>
-                            </div>
                 {state.map(account => {
                     console.log(state);
                     if (account !== undefined && account.NumberAccount !== undefined) {
@@ -113,8 +209,8 @@ class ListAccount extends Component {
                                         <div onClick={e => this.showTransaction(e, account)}><NavLink className="link btn-menu" to="/transaction">Xem các giao dịch </NavLink></div>
                                     </div>
                                     <div className="col-md-3 move-money-label">
-                                     <Button onClick = {e => this.deleteAccount(e,account.NumberAccount)}>Xóa tài khoản
-
+                                        <Button onClick={e => this.deleteAccount(e, account.NumberAccount, account.Balance)}>Xóa tài khoản
+   
                                     </Button></div>
                                 </div>
                             </div>
@@ -135,7 +231,9 @@ var mapStateToProps = (state) => {
 var mapDispatchToProps = (dispatch) => {
     return {
         userAccountAction: bindActionCreators(userAccounAction.USER_ACCOUNT_TRANSACTIONS, dispatch),
-        deleteAccount:  bindActionCreators(userAction.DELETE_ACCOUNT,dispatch)
+        Transaction: bindActionCreators(userAccounAction.DO_TRANSACTIONS, dispatch),
+        deleteAccount: bindActionCreators(userAction.DELETE_ACCOUNT, dispatch),
+        UpdateBalance: bindActionCreators(userAction.UPDATE_LIST_ACCOUNT, dispatch)
     };
 }
 
