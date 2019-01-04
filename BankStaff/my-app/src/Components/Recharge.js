@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Glyphicon } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
 import axios from 'axios'
 
 const divstyle = {
