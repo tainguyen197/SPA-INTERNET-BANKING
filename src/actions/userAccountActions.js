@@ -22,6 +22,12 @@ export function DO_TRANSACTIONS(payload){
     }
 }
 
+export function UPDATE_LIST_RECEIVER(payload){
+    return{
+        type: 'UPDATE_LIST_RECEIVER',
+        payload
+    }
+}
 
 
 export function USER_ACCOUNT_RECEIVER(payload){

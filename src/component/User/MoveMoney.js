@@ -255,7 +255,7 @@ class Account extends Component {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button>Đóng</Button>
+                    <Button onClick = {this.props.hindModal}>Đóng</Button>
                     <Button bsStyle="primary" onClick = {this.goNext} >Tiếp tục</Button>
                 </Modal.Footer>
             </Modal>

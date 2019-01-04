@@ -16,6 +16,8 @@ export default function UserReducer(state = initialState, action) {
                 }];
         case 'DELETE_ACCOUNT':
         console.log('DELETE');
+                //Cập nhật tài khoảng bị xóa lên server ở đây
+                //....................
                 return state.filter(account => account.NumberAccount !== action.payload)
         case 'UPDATE_LIST_ACCOUNT':
             return state.map(account => {

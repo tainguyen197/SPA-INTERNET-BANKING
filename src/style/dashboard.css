@@ -200,6 +200,13 @@
     margin-bottom: auto;
 }
 
+.name-account-receiver-edit{
+    font-size: 15px;
+    margin-top: 25px;
+    float: right;
+    margin-bottom: auto;
+}
+
 .name-account-transaction{
     font-size: 15px;
     background-color: #FFF;
