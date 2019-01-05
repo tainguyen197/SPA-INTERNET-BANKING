@@ -81,10 +81,10 @@ class LoginComponent extends Component {
                         })
 
 
-                    this.props.history.push('/home#/account');
+                    this.props.history.push('/home#/');
 
                     this.setState({
-                        redirectTo: '/home#/account',
+                        redirectTo: '/home#/',
                     })
                     return
                     //
