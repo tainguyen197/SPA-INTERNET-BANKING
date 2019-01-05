@@ -161,8 +161,6 @@ var mapDispatchToProps = (dispatch) => {
     return {
         updateUserAction: bindActionCreators(UserAction.UPDATE_USER_INFO, dispatch),
         userListAccountAction: bindActionCreators(userListAccount.USER_LIST_ACCOUNT, dispatch),
-        userAccountAction: bindActionCreators(userListAccount.USER_ACCOUNT_TRANSACTIONS, dispatch),
-        userReicerverAction: bindActionCreators(userListAccount.USER_ACCOUNT_RECEIVER, dispatch),
     };
 }
 

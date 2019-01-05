@@ -16,8 +16,15 @@ const divposition = {
 } 
 
 const divposition1 = {
+    'background-color': 'rgba(255, 255, 255, 0)',
     'position': 'relative',
-    'top': '50px'
+    'top': '-200px'
+} 
+
+const divposition2 = {
+    'position': 'relative',
+    'top': '30px',
+    'left': '250px'
 } 
 
 
@@ -54,14 +61,14 @@ class Dashboard extends React.Component {
         return (
             <HashRouter>
                 <div >
-                    <div>
-                        <Menu></Menu>
-                    </div>
-                    <div style={divposition1} className="dashboard-header">
+                    <div className="dashboard-header">
                         <img className="icon-avatar"></img>
                         <div onClick={this.test} className="usernam-lable">Xin chào, {userState[0].HoTen}</div>
 
                     </div >
+                    <div style={divposition2}>
+                        <Menu></Menu>
+                    </div>
                     <div style={divposition1} className="dashboard-body">
                         <Route path="/create-account" component={createAccount}></Route>
                         <Route path="/recharge" component={recharge}></Route>

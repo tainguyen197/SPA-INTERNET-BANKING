@@ -55,7 +55,7 @@ class Menu extends Component {
     render() {
         return (
             <div style={divstyle} className="sidenav" className="center-menu">
-                <form onSubmit={(e) => this.handleSubmit(e)}>
+                <form className = "form-row col-md-12" onSubmit={(e) => this.handleSubmit(e)}>
                     <div className="form-row" >
                         <div className="form-group col-md-12">
                             <label htmlFor="inputEmail4">Tên tài khoảng</label>
