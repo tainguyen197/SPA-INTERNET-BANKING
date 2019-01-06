@@ -196,7 +196,7 @@ input::placeholder {
     min-height: 100%;
 }
 body {
-    background-image: url(../images/bg_login.jpg);
+    /*background-image: url(../images/bg_login.jpg);*/
     background-position: 0 0;
     background-repeat: no-repeat;
     background-position: bottom;
