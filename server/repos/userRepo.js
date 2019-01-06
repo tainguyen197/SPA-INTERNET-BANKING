@@ -10,6 +10,11 @@ exports.loadUserAccountsById = (id) =>{
 	return db.load(sql);
 }
 
+exports.deleteAccount = (numberAccount) =>{
+	var sql = 'DELETE FROM user_balances WHERE NumberAccount = ' + numberAccount;
+	return db.load(sql);
+}
+
 exports.loadUserReceiverById = (id) =>{
 	var sql = 'select * from receiver_account where IDUser= '+ id;
 	return db.load(sql);
