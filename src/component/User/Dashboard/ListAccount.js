@@ -130,7 +130,12 @@ class ListAccount extends Component {
 
         if (window.confirm("Bạn chắc chắn muốn xóa tài khoản này?")) {
             var { state } = this.props;
-            if (state.length < 3) {
+            var length = 0;
+            for(var i = 0;i<state.length;i++){
+                if(state[i].Status === 0)
+                    length++;
+            }
+            if (length < 2) {
                 window.alert('Bạn phải duy trì ít nhất 1 tài khoản thanh toán');
             }
             else {

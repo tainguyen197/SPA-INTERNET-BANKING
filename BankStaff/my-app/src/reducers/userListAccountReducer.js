@@ -3,7 +3,8 @@ import { userInfo } from "os";
 const initialState = [{
     id: undefined,
     NumberAccount: undefined,
-    Balance: undefined
+    Balance: undefined,
+    Status: undefined,
 }]
 
 export default function UserReducer(state = initialState, action) {
@@ -14,9 +15,9 @@ export default function UserReducer(state = initialState, action) {
                 {
                     ...action.payload
                 }];
-        case 'DELETE_ACCOUNT':
-        console.log('DELETE');
-                return state.filter(account => account.NumberAccount !== action.payload)
+        // case 'DELETE_ACCOUNT':
+        // console.log('DELETE');
+        //         return state.filter(account => account.NumberAccount !== action.payload)
         case 'UPDATE_LIST_ACCOUNT':
             return state.map(account => {
                 if (account.NumberAccount !== action.payload.AccountNumberFrom && account.NumberAccount !== action.payload.AccountNumberTo) {

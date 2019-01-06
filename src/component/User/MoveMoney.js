@@ -32,19 +32,19 @@ class Content extends Component {
         }
     }
 
-    findNameAccount = () =>{
+    findNameAccount = () => {
         var req = "http://localhost:4000/user/loadUserInfoByNumberAccount/?numberAccount=" + parseInt(this.state.NumberAccount);
         Axios.get(req)
-        .then(data =>{
-            return data.data
-        })
-        .then(data =>{
-            var info = data[0];
-            this.setState({
-                Name: info.HoTen,
-                BalanceReceiver: info.Balance,
+            .then(data => {
+                return data.data
             })
-        })
+            .then(data => {
+                var info = data[0];
+                this.setState({
+                    Name: info.HoTen,
+                    BalanceReceiver: info.Balance,
+                })
+            })
     }
 
     onChangeNumberAccount(evt) {
@@ -69,26 +69,23 @@ class Content extends Component {
     }
 
     goNext() {
-        console.log(this.state);
+        var {user} = this.props
+        console.log(user);
         this.props.sendDataContent(this.state);
         this.props.sendHideContent(1);
-        var user = {
-            username: "Mai Hữu Tuấn",
-            email: "huutuan.hcmus@gmail.com"
-        }
-        var req = "http://localhost:4000/user/get-opt/?username="+user.username+"&email="+user.email;
+        var req = "http://localhost:4000/user/get-opt/?username=" + user[0].HoTen + "&email=" + user[0].Email;
         Axios.get(req)
             .then(result => {
                 console.log(result.data.opt);
                 return result.data.opt;
-            }).then(data =>{
+            }).then(data => {
                 this.props.sendOTPContent(data);
             })
     }
 
-    componentDidMount(){
+    componentDidMount() {
         console.log(receiverInfo);
-        if(receiverInfo!==undefined){
+        if (receiverInfo !== undefined) {
             this.setState({
                 NumberAccount: receiverInfo.Account,
             })
@@ -108,14 +105,14 @@ class Content extends Component {
                 <Modal.Body>
                     <div>
                         <div className="form-move-money">
-                            <input onBlur = {this.findNameAccount} onChange={this.onChangeNumberAccount} type="text" className="form-control input-kyc" id="account-number" name="account-number" maxLength="25" placeholder="Số tài khoản" required="" value={receiverInfo === undefined ? null : receiverInfo.Account} fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
+                            <input onBlur={this.findNameAccount} onChange={this.onChangeNumberAccount} type="text" className="form-control input-kyc" id="account-number" name="account-number" maxLength="25" placeholder="Số tài khoản" required="" value={receiverInfo === undefined ? null : receiverInfo.Account} fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
                         </div>
                         <div className="form-move-money">
                             <input onChange={e => this.onChangeName(e)} type="text" className="form-control input-kyc" id="account-number-name" name="account-number-name" maxLength="25" placeholder="Tên chủ tài khoản" value={receiverInfo === undefined ? this.state.Name : receiverInfo.Name} required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true" readonly></input>
                         </div>
 
                         <div className="form-move-money">
-                            <input  onBlur = {this.findNameAccount} onChange={e => this.onChangeMoveMoney(e)} type="text" className="form-control input-kyc" id="money" name="money" maxLength="25" placeholder="Nhập số tiền (VND)" required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
+                            <input onBlur={this.findNameAccount} onChange={e => this.onChangeMoveMoney(e)} type="text" className="form-control input-kyc" id="money" name="money" maxLength="25" placeholder="Nhập số tiền (VND)" required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
                         </div>
                         <div className="form-move-money">
                             <input onChange={e => this.onChangeDecription(e)} type="text" className="form-control input-kyc" id="decription" name="decription" maxLength="25" placeholder="Mô tả" required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
@@ -145,43 +142,43 @@ class OTP extends Component {
         }
     }
 
-    edtOTP(evt){
+    edtOTP(evt) {
         this.setState({
             OTP: evt.target.value
         })
     }
-    goNext(){
+    goNext() {
         var otp = this.props.OTP;
-        if(this.OTP === otp)
+        if (this.state.OTP === otp)
             this.props.doTransaction();
-            else{
-                window.alert('Bạn đã nhập sai OTP');
-            }
+        else {
+            window.alert('Bạn đã nhập sai OTP');
+        }
     }
 
     render() {
-        return(
-        <Modal
-            show={true}
-            onHide={this.props.hideOTP}
-        >
-            <Modal.Header>
-                <Modal.Title>Xác nhận mã OTP</Modal.Title>
-            </Modal.Header>
+        return (
+            <Modal
+                show={true}
+                onHide={this.props.hideOTP}
+            >
+                <Modal.Header>
+                    <Modal.Title>Xác nhận mã OTP</Modal.Title>
+                </Modal.Header>
 
-            <Modal.Body>
-                <div>
-                    <div className="form-move-money">
-                        <input onChange = {this.edtOTP} type="text" className="form-control input-kyc" id="OTP" name="OTP" maxLength="25" placeholder="Nhập số OTP" required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
+                <Modal.Body>
+                    <div>
+                        <div className="form-move-money">
+                            <input onChange={this.edtOTP} type="text" className="form-control input-kyc" id="OTP" name="OTP" maxLength="25" placeholder="Nhập số OTP" required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
+                        </div>
                     </div>
-                </div>
-            </Modal.Body>
+                </Modal.Body>
 
-            <Modal.Footer>
-                <Button onClick = {this.props.hideOTP}>Đóng</Button>
-                <Button bsStyle="primary" onClick = {this.goNext}>Tiếp tục</Button>
-            </Modal.Footer>
-        </Modal>
+                <Modal.Footer>
+                    <Button onClick={this.props.hideOTP}>Đóng</Button>
+                    <Button bsStyle="primary" onClick={this.goNext}>Tiếp tục</Button>
+                </Modal.Footer>
+            </Modal>
         )
     }
 }
@@ -253,7 +250,7 @@ class Account extends Component {
 
     goNext() {
         this.props.sendDataAccount(this.state);
-        this.props.sendHideAccount(1); 
+        this.props.sendHideAccount(1);
     }
 
     render() {
@@ -289,8 +286,8 @@ class Account extends Component {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button onClick = {this.props.hideAccount}>Đóng</Button>
-                    <Button bsStyle="primary" onClick = {this.goNext} >Tiếp tục</Button>
+                    <Button onClick={this.props.hideAccount}>Đóng</Button>
+                    <Button bsStyle="primary" onClick={this.goNext} >Tiếp tục</Button>
                 </Modal.Footer>
             </Modal>
         )
@@ -306,7 +303,7 @@ class MoveMoneyModel extends React.Component {
         this.justHindModalContent = this.justHindModalContent.bind(this);
         this.justHindModalOTP = this.justHindModalOTP.bind(this);
 
-        
+
         this.showModal = this.showModal.bind(this);
         this.ContentData = this.ContentData.bind(this);
         this.AccountData = this.AccountData.bind(this);
@@ -323,22 +320,22 @@ class MoveMoneyModel extends React.Component {
             OTP: undefined
         }
     }
-    justHindModalAccount(){
+    justHindModalAccount() {
         this.setState({
-            isAccount:false
+            isAccount: false
         })
     }
-    justHindModalContent(){
+    justHindModalContent() {
         this.setState({
-            isContent:false
+            isContent: false
         })
     }
-    justHindModalOTP(){
+    justHindModalOTP() {
         this.setState({
-            isOTP:false
+            isOTP: false
         })
     }
-    getOTP(otp){
+    getOTP(otp) {
         console.log(otp);
         this.setState({
             OTP: otp
@@ -360,7 +357,7 @@ class MoveMoneyModel extends React.Component {
 
     Test() {
         var today = new Date()
-        var date = today.getHours()  + ':' + today.getMinutes() + ', Ngày ' +  today.getDate() + ' Tháng ' + (today.getMonth() + 1) + ' Năm ' + today.getFullYear();
+        var date = today.getHours() + ':' + today.getMinutes() + ', Ngày ' + today.getDate() + ' Tháng ' + (today.getMonth() + 1) + ' Năm ' + today.getFullYear();
         var info = {
             ID: undefined,
             AccountNumberFrom: parseInt(this.state.accountData.selectedAccount),
@@ -410,23 +407,24 @@ class MoveMoneyModel extends React.Component {
         const { state } = this.props;
         return (
             <div className="static-modal">
-                {this.state.isAccount && <Account account = {state} sendDataAccount = {this.AccountData} sendHideAccount = {this.hindModalAccount} hideAccount = {this.justHindModalAccount}></Account>}
-                {this.state.isContent && <Content  sendOTPContent = {this.getOTP} sendDataContent = {this.ContentData} sendHideContent = {this.hindModalContent} hideContent = {this.justHindModalContent}></Content>}
-                {this.state.isOTP && <OTP OTP = {this.state.OTP} doTransaction = {this.Test} hideOTP = {this.justHindModalOTP}></OTP>}
+                {this.state.isAccount && <Account account={state} sendDataAccount={this.AccountData} sendHideAccount={this.hindModalAccount} hideAccount={this.justHindModalAccount}></Account>}
+                {this.state.isContent && <Content user = {this.props.user} sendOTPContent={this.getOTP} sendDataContent={this.ContentData} sendHideContent={this.hindModalContent} hideContent={this.justHindModalContent}></Content>}
+                {this.state.isOTP && <OTP OTP={this.state.OTP} doTransaction={this.Test} hideOTP={this.justHindModalOTP}></OTP>}
             </div>
         )
     }
 }
 var mapStateToProps = (state) => {
     return {
-        state: state.UserListAccountReducer
+        state: state.UserListAccountReducer,
+        user: state.userReducer
     };
 }
 
 var mapDispatchToProps = (dispatch) => {
     return {
         Transaction: bindActionCreators(userAccountActions.DO_TRANSACTIONS, dispatch),
-        UpdateBalance: bindActionCreators(userAction.UPDATE_LIST_ACCOUNT,dispatch)
+        UpdateBalance: bindActionCreators(userAction.UPDATE_LIST_ACCOUNT, dispatch)
     };
 }
 
