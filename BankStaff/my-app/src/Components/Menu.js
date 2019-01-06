@@ -43,7 +43,7 @@ class Menu extends Component {
                     <li><NavLink to="/" className="link1"><Glyphicon glyph="glyphicon glyphicon-transfer" className="glyph-menu"></Glyphicon>Home</NavLink></li>
                     <li><NavLink to="/create-account" className="link2"><Glyphicon glyph="glyphicon glyphicon-transfer" className="glyph-menu"></Glyphicon>Tạo tài khoảng</NavLink></li>
                     <li><NavLink to="/recharge" className="link3"><Glyphicon glyph="glyphicon glyphicon-transfer" className="glyph-menu"></Glyphicon>Nạp tiền</NavLink></li>
-                    <li><NavLink onClick={this.logout} to="/logout" className="link4"><Glyphicon glyph="glyphicon glyphicon-transfer" className="glyph-menu"></Glyphicon>Đăng xuất</NavLink></li>
+                    {/*<li><NavLink onClick={this.logout} to="/logout" className="link4"><Glyphicon glyph="glyphicon glyphicon-transfer" className="glyph-menu"></Glyphicon>Đăng xuất</NavLink></li>*/}
                 </ul>
             </div>
         )
