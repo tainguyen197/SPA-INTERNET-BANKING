@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux'
 import * as userAccountActions from '../../actions/userAccountActions'
 import * as userAction from '../../actions/userActions'
 import Axios from 'axios';
+import { stat } from 'fs';
 
 var receiverInfo = undefined;
 
@@ -71,11 +72,15 @@ class Content extends Component {
         this.props.sendDataContent(this.state);
         console.log(this.state);
         this.props.sendHideContent(1);
-        var req = "http://localhost:4000/user/get-opt";;
+        var user = {
+            username: "Mai Hữu Tuấn",
+            email: "huutuan.hcmus@gmail.com"
+        }
+        var req = "http://localhost:4000/user/get-opt/?username="+user.username+"&email="+user.email;
         Axios.get(req)
             .then(result => {
-                console.log(result.datat);
-                return result.data;
+                console.log(result.data.opt);
+                return result.data.opt;
             })
     }
 

@@ -133,25 +133,24 @@ router.post('/newTransaction', (req, res) => {
 router.get('/get-opt', (req, res) => {
 	
 	var opt = Math.floor(Math.random()*100000).toString();
-	console.log(opt);
-	var user = {
-		username: "Hữu Tuấn",
-		email: "huutuan.hcmus@gmail.com"
-	}
 	let mailOptions = {
 		from: ' "Grocery Shoppy" <maihuutuan.jp@gmail.com>',
-		to: user.email,
+		to: req.query.email,
 		subject: "Please confirm OPT for your account",
-		html: "Hello," + user.username + "<br> This is your OPT.<br><a href=#>"+opt+"</a>"
+		html: "Hello," + req.query.username + "<br> This is your OPT.<br><a href=#>"+opt+"</a>"
 	};
 	smtpTransport.sendMail(mailOptions, (error, info) => {
 		if (error) {
 			return console.log(error);
 		}
-	});
-	res.json({
-		opt
+		else{
+			console.log("------");
+			res.json({
+				'opt': opt
+			})
+		}
 	})
+	
 })
 
 module.exports = router;
