@@ -101,6 +101,18 @@ router.post('/updateBalanceUp', (req, res) => {
 		})
 })
 
+router.post('/deleteAccount', (req, res) => {
+	var numberAccount = req.query.numberAccount;
+	console.log(numberAccount);
+	userRepo.deleteAccount(numberAccount)
+	.then(rows => {
+		res.json(rows);
+	}).catch(err => {
+		console.log(err);
+		res.status = 500;
+		res.end('View error log on console');
+	})
+})
 
 router.post('/updateBalanceDown', (req, res) => {
 	var money = req.body.money;

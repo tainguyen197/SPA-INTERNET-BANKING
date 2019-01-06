@@ -17,7 +17,20 @@ export default function UserReducer(state = initialState, action) {
         case 'DELETE_ACCOUNT':
         console.log('DELETE');
                 //Cập nhật tài khoảng bị xóa lên server ở đây
-                //....................
+                var numberAccount = action.payload;
+                console.log(numberAccount); 
+                var res = 'http://localhost:4000/user/deleteAccount?numberAccount=' + numberAccount;
+                fetch(res, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "Access-Control-Allow-Origin": "null"
+                    },
+                })
+                    .catch(function (err) {
+                        console.log(err);
+                    })
                 return state.filter(account => account.NumberAccount !== action.payload)
         case 'UPDATE_LIST_ACCOUNT':
             return state.map(account => {
