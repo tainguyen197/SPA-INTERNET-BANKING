@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as userAccountActions from '../../actions/userAccountActions'
 import * as userAction from '../../actions/userActions'
-
 import Axios from 'axios';
 
 var receiverInfo = undefined;
@@ -72,6 +71,12 @@ class Content extends Component {
         this.props.sendDataContent(this.state);
         console.log(this.state);
         this.props.sendHideContent(1);
+        var req = "http://localhost:4000/user/get-opt";;
+        Axios.get(req)
+            .then(result => {
+                console.log(result.datat);
+                return result.data;
+            })
     }
 
     render() {

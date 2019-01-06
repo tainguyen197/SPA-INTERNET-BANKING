@@ -2,6 +2,16 @@ var express = require('express');
 var userRepo = require('../repos/userRepo');
 
 var router = express.Router();
+var nodemailer = require("nodemailer");
+var smtpTransport = nodemailer.createTransport({
+	host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+        user: "maihuutuan.jp@gmail.com",
+        pass: "danghuulip"
+    }
+});
 
 router.get('/', (req, res) => {
 	userRepo.loadAll()
@@ -14,109 +24,132 @@ router.get('/', (req, res) => {
 		})
 })
 
-router.get('/loadUserInfoById',(req,res) =>{
+router.get('/loadUserInfoById', (req, res) => {
 	var idUser = req.query.id;
 	userRepo.loadUserInfoById(idUser)
-	.then(rows => {
-		res.json(rows);
-	}).catch(err =>{
-		console.log(err);
-		res.status = 500;
-		res.end('View error log on console');
-	})
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
 })
 
-router.get('/loadUserTransactionsById',(req,res) =>{
+router.get('/loadUserTransactionsById', (req, res) => {
 	var numberAccount = req.query.numberAccount;
 	userRepo.loadUserTransactionsById(numberAccount)
-	.then(rows => {
-		res.json(rows);
-	}).catch(err =>{
-		console.log(err);
-		res.status = 500;
-		res.end('View error log on console');
-	})
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
 })
 
-router.get('/loadUserReceiverById',(req,res) =>{
+router.get('/loadUserReceiverById', (req, res) => {
 	var Id = req.query.id;
 	userRepo.loadUserReceiverById(Id)
-	.then(rows => {
-		res.json(rows);
-	}).catch(err =>{
-		console.log(err);
-		res.status = 500;
-		res.end('View error log on console');
-	})
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
 })
 
 
-router.get('/loadUserAccountsById',(req,res) =>{
+router.get('/loadUserAccountsById', (req, res) => {
 	var idUser = req.query.id;
 	userRepo.loadUserAccountsById(idUser)
-	.then(rows => {
-		res.json(rows);
-	}).catch(err =>{
-		console.log(err);
-		res.status = 500;
-		res.end('View error log on console');
-	})
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
 })
 
-router.get('/loadUserInfoByNumberAccount',(req,res) =>{
+router.get('/loadUserInfoByNumberAccount', (req, res) => {
 	var numberAccount = req.query.numberAccount;
 	userRepo.loadUserInfoByNumberAccount(numberAccount)
-	.then(rows => {
-		res.json(rows);
-	}).catch(err =>{
-		console.log(err);
-		res.status = 500;
-		res.end('View error log on console');
-	})
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
 })
 
 
-router.post('/updateBalanceUp',(req,res) =>{
+router.post('/updateBalanceUp', (req, res) => {
 	var money = req.body.money;
 	var numberAccountTo = req.body.numberAccountTo;
 	var AccountToBalance = req.body.AccountToBalance + money;
 	console.log(req.body);
-	userRepo.updateBalance(numberAccountTo,AccountToBalance)
-	.then(rows => {
-		res.json(rows);
-	}).catch(err =>{
-		console.log(err);
-		res.status = 500;
-		res.end('View error log on console');
-	})
+	userRepo.updateBalance(numberAccountTo, AccountToBalance)
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
 })
 
 
-router.post('/updateBalanceDown',(req,res) =>{
+router.post('/updateBalanceDown', (req, res) => {
 	var money = req.body.money;
 	var numberAccountFrom = req.body.numberAccountFrom;
 	var AccountFromBalance = req.body.AccountFromBalance - money;
-	
-	userRepo.updateBalance(numberAccountFrom,AccountFromBalance)
-	.then(rows => {
-		res.json(rows);
-	}).catch(err =>{
-		console.log(err);
-		res.status = 500;
-		res.end('View error log on console');
-	})
+
+	userRepo.updateBalance(numberAccountFrom, AccountFromBalance)
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
 })
 
-router.post('/newTransaction',(req,res) =>{
+router.post('/newTransaction', (req, res) => {
 	var transaction = req.body;
 	console.log(transaction);
 	userRepo.newTransaction(transaction)
-	.then(rows => {
-		res.json(rows);
-	}).catch(err =>{
-		console.log(err);
-		res.status = 500;
-		res.end('View error log on console');
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
+})
+
+router.get('/get-opt', (req, res) => {
+	console.log("-------");
+	var opt = (Math.random()%100000).toString();
+	var user = {
+		username: "Hữu Tuấn",
+		email: "huutuan.hcmus@gmail.com"
+	}
+	let mailOptions = {
+		from: ' "Grocery Shoppy" <maihuutuan.jp@gmail.com>',
+		to: user.email,
+		subject: "Please confirm OPT for your account",
+		html: "Hello," + user.username + "<br> This is your OPT.<br><a href=" + opt + "></a>"
+	};
+	smtpTransport.sendMail(mailOptions, (error, info) => {
+		if (error) {
+			return console.log(error);
+		}
+	});
+	res.json({
+		opt
 	})
 })
 

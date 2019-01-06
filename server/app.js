@@ -23,6 +23,7 @@ app.use('/user', UserController);
 app.use('/login', LoginController);
 app.use('/user-account', LoginController);
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 var port = process.env.PORT || 4000;
 app.listen(port, () => {
     console.log(`Banking API is running on port ${port}`);

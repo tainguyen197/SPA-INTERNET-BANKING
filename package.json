@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap3": "^3.3.5",
+    "nodemailer": "^5.0.0",
     "react": "^16.6.3",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.6.3",
@@ -15,7 +16,8 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.1",
     "react-toasts": "^2.0.14",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "dns" : "file:./src/mock/dns"
   },
   "devDependencies": {},
   "scripts": {
