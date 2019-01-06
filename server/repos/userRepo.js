@@ -48,6 +48,6 @@ exports.updateBalance = (numberAccount, money) => {
 }
 
 exports.newTransaction = (transaciton) =>{
-	var sql = "INSERT INTO history(ID,AccountNumberFrom,AccountNumberTo, Type, Time, MoneyTransaction, MoneyBalance) VALUES ("+ null + "," + transaciton.AccountNumberFrom + "," + transaciton.AccountNumberTo + ",'" + transaciton.Type + "','" + transaciton.Time + "'," + transaciton.	MoneyTransaction + "," + transaciton.	MoneyBalance +")" ;
+	var sql = "INSERT INTO history(ID,AccountNumberFrom,AccountNumberTo, Type, Time, MoneyTransaction, MoneyBalance) VALUES ("+ null + "," + transaciton.AccountNumberFrom + "," + transaciton.AccountNumberTo + ",'" + transaciton.Type + "','" + transaciton.Time + "'," + transaciton.MoneyTransaction + "," + transaciton.MoneyBalance +")" ;
 	return db.load(sql);
 }

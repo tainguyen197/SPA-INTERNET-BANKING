@@ -35,8 +35,11 @@ class Menu extends Component {
             var req = "http://localhost:4000/user-account/create-user-account/?username=" + this.state.username + "&password=" + this.state.password
                 + "&name=" + this.state.name + "&email=" + this.state.email + "&phone=" + this.state.phone;
             axios.post(req).then(result => {
+                console.log(result);
                 return result.data;
+                
             }).then(data => {
+                console.log(data);
                 if (data.length === 0) {
                     window.alert('Tạo tài khoản khách hàng thất bại. Vui lòng thử lại.');
                 }

@@ -33,7 +33,7 @@ class Menu extends Component {
                 console.log(response);
             })*/}
         var req = "http://localhost:4000/user-account/create-checking-account/?username=" + this.state.username;
-        axios.get(req).then(result => {
+        axios.post(req).then(result => {
             return result.data;
         }).then(data => {
             if (data.length === 0) {
