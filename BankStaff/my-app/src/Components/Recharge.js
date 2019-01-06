@@ -35,7 +35,7 @@ class Menu extends Component {
             .then(function (response) {
                 console.log(response);
             })*/}
-        var req = "http://localhost:4000/user-account/recharge/?username=" + this.state.id + "&money=" + this.state.moeny;
+        var req = "http://localhost:4000/user-account/recharge/?numberaccount=" + this.state.id + "&money=" + this.state.moeny;
         axios.get(req).then(result => {
             return result.data;
         }).then(data => {
@@ -58,7 +58,7 @@ class Menu extends Component {
                 <form className = "form-row col-md-12" onSubmit={(e) => this.handleSubmit(e)}>
                     <div className="form-row" >
                         <div className="form-group col-md-12">
-                            <label htmlFor="inputEmail4">Tên tài khoảng</label>
+                            <label htmlFor="inputEmail4">Số tài khoảng</label>
                             <input type="text" className="form-control" id="inputEmail4" name="id" value={this.state.id} onChange={this.handleChange} placeholder="Tên tài khoảng" />
                         </div>
                     </div>

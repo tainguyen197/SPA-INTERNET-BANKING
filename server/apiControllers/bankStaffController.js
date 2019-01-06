@@ -5,7 +5,7 @@ var router = express.Router();
 
 router.post('/create-user-account',(req,res) =>{
 	var idUser = req.query.id;
-	bankStaffRep.createUserAccount(req.query.username, req.query.password, req.query.name, req.query.email. req.query.phone)
+	bankStaffRep.createUserAccount(req.query.username, req.query.password, req.query.name, req.query.email, req.query.phone)
 	.then(rows => {
 		res.json(rows);
 	}).catch(err =>{
@@ -16,7 +16,6 @@ router.post('/create-user-account',(req,res) =>{
 })
 
 router.post('/create-checking-account',(req,res) =>{
-	var idUser = req.query.id;
 	bankStaffRep.createCheckingAccount(req.query.username)
 	.then(rows => {
 		res.json(rows);
@@ -28,8 +27,7 @@ router.post('/create-checking-account',(req,res) =>{
 })
 
 router.post('/recharge',(req,res) =>{
-	var idUser = req.query.id;
-	bankStaffRep.reCharge(req.query.username,req.query.money)
+	bankStaffRep.reCharge(req.query.numberaccount,req.query.money)
 	.then(rows => {
 		res.json(rows);
 	}).catch(err =>{
