@@ -69,8 +69,9 @@ class Content extends Component {
     }
 
     goNext() {
-        this.props.sendDataContent(this.state);
         console.log(this.state);
+        this.props.sendDataContent(this.state);
+        
         this.props.sendHideContent(1);
         var user = {
             username: "Mai Hữu Tuấn",
@@ -82,6 +83,15 @@ class Content extends Component {
                 console.log(result.data.opt);
                 return result.data.opt;
             })
+    }
+
+    componentDidMount(){
+        console.log(receiverInfo);
+        if(receiverInfo!==undefined){
+            this.setState({
+                NumberAccount: receiverInfo.Account,
+            })
+        }
     }
 
     render() {
@@ -104,7 +114,7 @@ class Content extends Component {
                         </div>
 
                         <div className="form-move-money">
-                            <input onChange={e => this.onChangeMoveMoney(e)} type="text" className="form-control input-kyc" id="money" name="money" maxLength="25" placeholder="Nhập số tiền (VND)" required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
+                            <input  onBlur = {this.findNameAccount} onChange={e => this.onChangeMoveMoney(e)} type="text" className="form-control input-kyc" id="money" name="money" maxLength="25" placeholder="Nhập số tiền (VND)" required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
                         </div>
                         <div className="form-move-money">
                             <input onChange={e => this.onChangeDecription(e)} type="text" className="form-control input-kyc" id="decription" name="decription" maxLength="25" placeholder="Mô tả" required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
@@ -212,6 +222,7 @@ class Account extends Component {
 
     _onSelect = (value) => {
         var balance = this.customBalance(value.value);
+        console.log(balance);
         this.setState({
             selectedAccount: value.label
         })
@@ -229,7 +240,7 @@ class Account extends Component {
 
     goNext() {
         this.props.sendDataAccount(this.state);
-        this.props.sendHideAccount(1);
+        this.props.sendHideAccount(1); 
     }
 
     render() {
@@ -258,7 +269,7 @@ class Account extends Component {
                         <div className="form-move-money">
                             <Dropdown options={options} onChange={this._onSelect} placeholder="Lựa chọn tài khoản" />
                             <br></br>
-                            <input type="text" className="form-control input-kyc" id="balance" name="balance" maxLength="25" placeholder="Số dư khả dụng" value={i === -1 ? null : this.state.balance} required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true" readonly></input>
+                            <input type="text" className="form-control input-kyc" id="balance" name="balance" maxLength="25" placeholder="Số dư khả dụng" value={i === -1 ? null : this.state.balanceShow} required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true" readonly></input>
 
                         </div>
                     </div>
@@ -309,18 +320,21 @@ class MoveMoneyModel extends React.Component {
 
 
     Test() {
+        var today = new Date()
+        var date = today.getHours()  + ':' + today.getMinutes() + ', Ngày ' +  today.getDate() + ' Tháng ' + (today.getMonth() + 1) + ' Năm ' + today.getFullYear();
         var info = {
             ID: undefined,
             AccountNumberFrom: parseInt(this.state.accountData.selectedAccount),
             AccountNumberTo: parseInt(this.state.contentData.NumberAccount),
             Type: 'CHUYEN_TIEN',
-            Time: '14:20 Thứ 6, Ngày 19 tháng 12',
+            Time: date,
             MoneyTransaction: parseInt(this.state.contentData.Money),
             MoneyBalance: parseInt(this.state.accountData.balance),
             MoneyBalanceReceiver: parseInt(this.state.contentData.BalanceReceiver),
 
         }
         this.props.Transaction(info);
+        //cập nhật lịch sử người nahanj
         //cập nhật tiền trong balance
         var money = {
             AccountNumberFrom: parseInt(this.state.accountData.selectedAccount),

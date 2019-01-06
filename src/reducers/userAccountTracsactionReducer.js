@@ -35,54 +35,56 @@ export default function changeBalances(state = initialState, action) {
             } else {
 
             }
-            //cập nhật số tiền
-            fetch('http://localhost:4000/user/updateBalanceUp', {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    "Access-Control-Allow-Origin": "null"
-                },
-            })
-                .catch(function (err) {
-                    console.log(err);
+            if (data !== undefined) {
+                //cập nhật số tiền
+                fetch('http://localhost:4000/user/updateBalanceUp', {
+                    method: 'POST',
+                    mode: 'cors',
+                    body: JSON.stringify(data),
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "Access-Control-Allow-Origin": "null"
+                    },
                 })
-            //cập nhật số tiền
-            fetch('http://localhost:4000/user/updateBalanceDown', {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(data),
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    "Access-Control-Allow-Origin": "null"
-                },
-            })
-                .catch(function (err) {
-                    console.log(err);
+                    .catch(function (err) {
+                        console.log(err);
+                    })
+                //cập nhật số tiền
+                fetch('http://localhost:4000/user/updateBalanceDown', {
+                    method: 'POST',
+                    mode: 'cors',
+                    body: JSON.stringify(data),
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "Access-Control-Allow-Origin": "null"
+                    },
                 })
-            //ghi xuống db transaction mới
-            var transaction = {
-                AccountNumberFrom: action.payload.AccountNumberFrom,
-                AccountNumberTo: action.payload.AccountNumberTo,
-                Type: action.payload.Type,
-                Time: action.payload.Time,
-                MoneyTransaction: action.payload.MoneyTransaction,
-                MoneyBalance: action.payload.MoneyBalance,
-            }
+                    .catch(function (err) {
+                        console.log(err);
+                    })
+                //ghi xuống db transaction mới
+                var transaction = {
+                    AccountNumberFrom: action.payload.AccountNumberFrom,
+                    AccountNumberTo: action.payload.AccountNumberTo,
+                    Type: action.payload.Type,
+                    Time: action.payload.Time,
+                    MoneyTransaction: action.payload.MoneyTransaction,
+                    MoneyBalance: action.payload.MoneyBalance,
+                }
 
-            fetch('http://localhost:4000/user/newTransaction', {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify(transaction),
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    "Access-Control-Allow-Origin": "null"
-                },
-            })
-                .catch(function (err) {
-                    console.log(err);
+                fetch('http://localhost:4000/user/newTransaction', {
+                    method: 'POST',
+                    mode: 'cors',
+                    body: JSON.stringify(transaction),
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "Access-Control-Allow-Origin": "null"
+                    },
                 })
+                    .catch(function (err) {
+                        console.log(err);
+                    })
+            }
             return [
                 ...state,
                 {

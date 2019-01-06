@@ -25,6 +25,7 @@ class LoginComponent extends Component {
     }
 
     submidLogin = () => {
+      
         var req = "http://localhost:4000/login/?username=" + this.state.username + "&password=" + this.state.password;
         axios.get(req)
             .then(result => {
@@ -73,11 +74,12 @@ class LoginComponent extends Component {
                                     .then(data => {
                                         return data.data;
                                     }).then(transactions => {
-                                        console.log('transacion',transactions);
                                         transactions.map(transaction => {
                                             this.props.userAccountAction(transaction);
                                         })
                                     })
+
+                              
                             });
 
                         })

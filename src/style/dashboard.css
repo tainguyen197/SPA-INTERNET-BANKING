@@ -222,13 +222,14 @@
     padding-top: 7px;
     color: indigo;
     font-size: 25px;
-    margin-left: auto;
-    margin-right: auto;
+    float: right;
+   
     margin-bottom: auto;
 }
 
 .account-transaction-wallet{
     padding-left: 15px;
+    float: right;
 }
 .move-money{
     margin-top: 14px;

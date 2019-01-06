@@ -97,12 +97,14 @@ class ListAccount extends Component {
     }
 
     getDataAccount(data) {
+        var today = new Date()
+        var date = today.getHours()  + ':' + today.getMinutes() + ', Ngày ' +  today.getDate() + ' Tháng ' + (today.getMonth() + 1) + ' Năm ' + today.getFullYear();
         var info = {
             ID: undefined,
             AccountNumberFrom: parseInt(this.state.AccountDelete),
             AccountNumberTo: parseInt(data.selectedAccount),
             Type: 'CHUYEN_TIEN',
-            Time: '14:20 Thứ 6, Ngày 19 tháng 12',
+            Time: date,
             MoneyTransaction: parseInt(this.state.AccountDeleteBalance),
             MoneyBalance: parseInt(this.state.AccountDeleteBalance),
             MoneyBalanceReceiver: parseInt(data.balance),
@@ -147,8 +149,6 @@ class ListAccount extends Component {
     customBalance = (number) => {
 
         var numberAccount = number.toString();
-        //console.log(numberAccount);
-
         if (number) {
             var array = [];
             var i = 0;

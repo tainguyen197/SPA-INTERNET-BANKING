@@ -48,6 +48,19 @@ router.get('/loadUserTransactionsById', (req, res) => {
 		})
 })
 
+router.get('/loadUserReceiverTransactionsById', (req, res) => {
+	var numberAccount = req.query.numberAccount;
+	userRepo.loadUserReceiverTransactionsById(numberAccount)
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
+})
+
+
 router.get('/loadUserReceiverById', (req, res) => {
 	var Id = req.query.id;
 	userRepo.loadUserReceiverById(Id)

@@ -36,6 +36,11 @@ exports.loadUserTransactionsById = (numberAccount) =>{
 	return db.load(sql);
 }
 
+exports.loadUserReceiverTransactionsById = (numberAccount) =>{
+	var sql = 'select * from history where AccountNumberTo = '+ numberAccount;
+	return db.load(sql);
+}
+
 exports.updateBalance = (numberAccount, money) => {
 	var sql = 'UPDATE user_balances SET Balance = '+ money + ' WHERE NumberAccount =' + numberAccount ;
 	console.log(sql);
