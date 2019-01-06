@@ -24,6 +24,7 @@ class Content extends Component {
         this.goNext = this.goNext.bind(this);
         this.findNameAccount = this.findNameAccount.bind(this);
         this.state = {
+            ID: undefined,
             NumberAccount: undefined,
             BalanceReceiver: undefined,
             Name: undefined,
@@ -40,7 +41,9 @@ class Content extends Component {
             })
             .then(data => {
                 var info = data[0];
+                console.log(info);
                 this.setState({
+                    ID: info.ID,
                     Name: info.HoTen,
                     BalanceReceiver: info.Balance,
                 })
@@ -149,8 +152,11 @@ class OTP extends Component {
     }
     goNext() {
         var otp = this.props.OTP;
-        if (this.state.OTP === otp)
+        if (this.state.OTP === otp){
             this.props.doTransaction();
+            window.alert('Bạn đã chuyển tiền thành công');
+            this.props.hideOTP();
+        }
         else {
             window.alert('Bạn đã nhập sai OTP');
         }
@@ -251,6 +257,7 @@ class Account extends Component {
     goNext() {
         this.props.sendDataAccount(this.state);
         this.props.sendHideAccount(1);
+        
     }
 
     render() {
@@ -258,7 +265,7 @@ class Account extends Component {
         const { account } = this.props;
         var options = [];
         account.forEach(element => {
-            if (element.NumberAccount !== undefined) {
+            if (element.NumberAccount !== undefined && element.Status ===0) {
                 i++;
                 var option = { value: element.Balance, label: element.NumberAccount }
                 options.push(option);
@@ -377,6 +384,18 @@ class MoveMoneyModel extends React.Component {
             MoneyTransaction: parseInt(this.state.contentData.Money),
         }
         this.props.UpdateBalance(money);
+
+        //Cập nhật danh sách người nhận
+        var receiver = {
+            IDUser: this.state.contentData.ID,
+            Name: this.state.contentData.Name,
+            Account: parseInt(this.state.contentData.NumberAccount),
+        }
+
+        this.props.UpdateListReceiver(receiver);
+
+
+
     }
     showModal = () => {
         this.setState({
@@ -424,7 +443,8 @@ var mapStateToProps = (state) => {
 var mapDispatchToProps = (dispatch) => {
     return {
         Transaction: bindActionCreators(userAccountActions.DO_TRANSACTIONS, dispatch),
-        UpdateBalance: bindActionCreators(userAction.UPDATE_LIST_ACCOUNT, dispatch)
+        UpdateBalance: bindActionCreators(userAction.UPDATE_LIST_ACCOUNT, dispatch),
+        UpdateListReceiver: bindActionCreators(userAccountActions.NEW_USER_ACCOUNT_RECEIVER, dispatch)
     };
 }
 

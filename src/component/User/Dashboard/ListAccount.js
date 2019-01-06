@@ -45,7 +45,7 @@ class Account extends Component {
         const { account, accountSelected } = this.props;
         var options = [];
         account.forEach(element => {
-            if (element.NumberAccount !== undefined && element.NumberAccount !== accountSelected) {
+            if (element.NumberAccount !== undefined && element.NumberAccount !== accountSelected && element.Status ===0) {
                 i++;
                 var option = { value: element.Balance, label: element.NumberAccount }
                 options.push(option);

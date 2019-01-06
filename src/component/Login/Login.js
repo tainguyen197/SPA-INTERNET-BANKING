@@ -79,6 +79,17 @@ class LoginComponent extends Component {
                                         })
                                     })
 
+                                    //lấy thông tin giao dịch của các tài khoản
+                                var req = "http://localhost:4000/user/loadUserReceiverTransactionsById/?numberAccount=" + element.NumberAccount;
+                                axios.get(req)
+                                    .then(data => {
+                                        return data.data;
+                                    }).then(transactions => {
+                                        transactions.map(transaction => {
+                                            transaction.Type = 'NHAN_TIEN'
+                                            this.props.userAccountAction(transaction);
+                                        })
+                                    })
                               
                             });
 

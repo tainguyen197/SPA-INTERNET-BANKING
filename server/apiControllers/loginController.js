@@ -15,4 +15,17 @@ router.get('/',(req,res) =>{
         res.statusCode = 500;
     })
 })
+
+router.get('/staff-login',(req,res) =>{
+    var username = req.query.username;
+    var password = req.query.password;
+
+    LoginRepo.StaffLogin(username,password)
+    .then(rows => {
+        res.json(rows);
+    }).catch(err => {
+        console.log(err);
+        res.statusCode = 500;
+    })
+})
 module.exports = router;

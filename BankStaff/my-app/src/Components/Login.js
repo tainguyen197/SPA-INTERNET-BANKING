@@ -23,7 +23,7 @@ class LoginComponent extends Component {
     }
 
     submidLogin = () => {
-        var req = "http://localhost:4000/login/?username=" + this.state.username + "&password=" + this.state.password;
+        var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
         axios.get(req)
             .then(result => {
                 return result.data;
@@ -33,18 +33,18 @@ class LoginComponent extends Component {
                 }
                 else {
                      //lấy thông tin user receiver lưu vào store
-                     var userID = data[0].IDUser;
-                     var req = "http://localhost:4000/user/loadUserReceiverById/?id=" + userID;
+                    /*var userID = data[0].IDUser;
+                    var req = "http://localhost:4000/user/staff-loadUserReceiverById/?id=" + userID;
                      axios.get(req)
                          .then(result => {
                              return result.data;
                          }).then(data => {
                              var userReceiver = data[0];
-                             this.props.userReicerverAction(userReceiver);
-                         })
+
+                         })*/
                     //lấy thông tin user lưu vào store
                     var userID = data[0].IDUser;
-                    var req = "http://localhost:4000/user/loadUserInfoById/?id=" + userID;
+                    var req = "http://localhost:4000/user/staff-loadUserInfoById/?id=" + userID;
                     axios.get(req)
                         .then(result => {
                             return result.data;
@@ -55,7 +55,7 @@ class LoginComponent extends Component {
                         })
 
                     //lấy thông tin userListAccount lưu vào store
-                    var req = "http://localhost:4000/user/loadUserAccountsById?id=" + userID;
+                    /*var req = "http://localhost:4000/user/staff-loadUserAccountsById?id=" + userID;
                     axios.get(req)
                         .then(result => {
                             return result.data;
@@ -72,13 +72,11 @@ class LoginComponent extends Component {
                                         return data.data;
                                     }).then(transactions => {
                                         console.log('transacion',transactions);
-                                        transactions.map(transaction => {
-                                            this.props.userAccountAction(transaction);
-                                        })
+                                      
                                     })
                             });
 
-                        })
+                        })*/
 
 
                     this.props.history.push('/home#/');

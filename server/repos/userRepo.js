@@ -26,8 +26,13 @@ exports.loadUserInfoById = (id) =>{
 	return db.load(sql);
 }
 
+exports.StaffLoadUserInfoById = (id) =>{
+	var sql = 'select * from staff where ID= '+ id;
+	return db.load(sql);
+}
+
 exports.loadUserInfoByNumberAccount = (numberAccount) =>{
-	var sql = 'select user.HoTen, user_balances.Balance from user,user_balances where user_balances.IDUser = user.ID and  user_balances.NumberAccount= '+ numberAccount;
+	var sql = 'select user.HoTen, user_balances.Balance, user.ID from user,user_balances where user_balances.IDUser = user.ID and  user_balances.NumberAccount= '+ numberAccount;
 	return db.load(sql);
 }
 
@@ -36,7 +41,13 @@ exports.loadUserTransactionsById = (numberAccount) =>{
 	return db.load(sql);
 }
 
+
 exports.loadUserReceiverTransactionsById = (numberAccount) =>{
+	var sql = 'select * from history where AccountNumberTo = '+ numberAccount;
+	return db.load(sql);
+}
+
+exports.StaffLoadUserReceiverTransactionsById = (numberAccount) =>{
 	var sql = 'select * from history where AccountNumberTo = '+ numberAccount;
 	return db.load(sql);
 }
@@ -50,4 +61,14 @@ exports.updateBalance = (numberAccount, money) => {
 exports.newTransaction = (transaciton) =>{
 	var sql = "INSERT INTO history(ID,AccountNumberFrom,AccountNumberTo, Type, Time, MoneyTransaction, MoneyBalance) VALUES ("+ null + "," + transaciton.AccountNumberFrom + "," + transaciton.AccountNumberTo + ",'" + transaciton.Type + "','" + transaciton.Time + "'," + transaciton.MoneyTransaction + "," + transaciton.MoneyBalance +")" ;
 	return db.load(sql);
+}
+
+exports.newReicever = (Name, Account,id) =>{
+	var sql = "INSERT INTO receiver_account(IDUser,Name,Account) VALUES (" + id + ",'"+Name +"'," + Account + ")" ;
+	return db.load(sql);
+}
+
+exports.deleteReceiver = (Account) =>{
+	var sql = "DELETE FROM receiver_account WHERE Account = " +Account;
+		return db.load(sql);
 }

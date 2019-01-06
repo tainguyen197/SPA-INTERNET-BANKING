@@ -59,6 +59,7 @@ class ListReceiver extends Component {
         this.showinfo = this.showinfo.bind(this);
         this.editName = this.editName.bind(this);
         this.getData = this.getData.bind(this);
+        this.deleteName = this.deleteName.bind(this);
         this.state = {
             receiverInfo: undefined,
             isModeEditShow: false,
@@ -73,6 +74,12 @@ class ListReceiver extends Component {
         this.addNew();
     }
 
+    deleteName(e, receiver) {
+        if (window.confirm("Bạn chắc chắn muốn xóa tài khoản này?")) {
+            this.props.DeleteReceiver(receiver);
+            window.alert('Đã xóa');
+        }
+    }
     hindModal = () => {
         this.setState({
             isModelShow: false
@@ -124,28 +131,22 @@ class ListReceiver extends Component {
 
                 <br></br>
                 <br></br>
-                <div className="center-list-receiver">
-                    <div className="col-md-1 icon-avatar-receiver "></div>
-                    <div className="col-md-9">
-                        <div className=" name-account-receiver">qaaaa</div>
-                        <div>2324234234234</div>
-                    </div>
-                    <div className="col-md-1">
-                        <div onClick={this.editName} className="name-account-receiver-edit"><Glyphicon glyph="glyphicon glyphicon-pencil" className=""></Glyphicon></div>
-                    </div>
-                </div>
+    
                 {state.map(receiver => {
-                    if (receiver.ID !== undefined) {
+                    if (receiver.Account !== undefined) {
                         return (
                             <div>
                                 <div className="center-list-receiver">
                                     <div className="col-md-1 icon-avatar-receiver "></div>
-                                    <div onClick={e => this.showinfo(e, receiver)} className="col-md-9">
+                                    <div onClick={e => this.showinfo(e, receiver)} className="col-md-8">
                                         <div className=" name-account-receiver">{receiver.Name}</div>
                                         <div>{receiver.Account}</div>
                                     </div>
                                     <div className="col-md-1">
                                         <div onClick={e => this.editName(e, receiver)} className="name-account-receiver-edit"><Glyphicon glyph="glyphicon glyphicon-pencil" className=""></Glyphicon></div>
+                                    </div>
+                                    <div className="col-md-1">
+                                        <div onClick={e => this.deleteName(e, receiver)} className="name-account-receiver-edit"><Glyphicon glyph="glyphicon glyphicon-remove" className=""></Glyphicon></div>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +183,8 @@ var mapStateToProps = (state) => {
 
 var mapDispatchToProps = (dispatch) => {
     return {
-        UpdateListReceiver: bindActionCreators(userAccountActions.UPDATE_LIST_RECEIVER, dispatch)
+        UpdateListReceiver: bindActionCreators(userAccountActions.UPDATE_LIST_RECEIVER, dispatch),
+        DeleteReceiver: bindActionCreators(userAccountActions.DELETE_USER_ACCOUNT_RECEIVER, dispatch)
     };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ListReceiver);

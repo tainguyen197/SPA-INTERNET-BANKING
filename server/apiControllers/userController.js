@@ -36,7 +36,19 @@ router.get('/loadUserInfoById', (req, res) => {
 		})
 })
 
-router.get('/loadUserTransactionsById', (req, res) => {
+router.get('/staff-loadUserInfoById', (req, res) => {
+	var idUser = req.query.id;
+	userRepo.StaffLoadUserInfoById(idUser)
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
+})
+
+router.get('loadUserTransactionsById', (req, res) => {
 	var numberAccount = req.query.numberAccount;
 	userRepo.loadUserTransactionsById(numberAccount)
 		.then(rows => {
@@ -51,6 +63,17 @@ router.get('/loadUserTransactionsById', (req, res) => {
 router.get('/loadUserReceiverTransactionsById', (req, res) => {
 	var numberAccount = req.query.numberAccount;
 	userRepo.loadUserReceiverTransactionsById(numberAccount)
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
+})
+router.get('/staff-loadUserReceiverTransactionsById', (req, res) => {
+	var numberAccount = req.query.numberAccount;
+	userRepo.StaffLoadUserReceiverTransactionsById(numberAccount)
 		.then(rows => {
 			res.json(rows);
 		}).catch(err => {
@@ -142,6 +165,18 @@ router.post('/updateBalanceDown', (req, res) => {
 		})
 })
 
+router.post('/deleteReceiver', (req, res) => {
+	var transaction = req.query.numberAccount;
+	userRepo.deleteReceiver(transaction)
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
+})
+
 router.post('/newTransaction', (req, res) => {
 	var transaction = req.body;
 	console.log(transaction);
@@ -155,6 +190,19 @@ router.post('/newTransaction', (req, res) => {
 		})
 })
 
+router.post('/newReicever', (req, res) => {
+	var name = req.query.name;
+	var account = req.query.account;
+	var id = req.query.id
+	userRepo.newReicever(name,account,id)
+		.then(rows => {
+			res.json(rows);
+		}).catch(err => {
+			console.log(err);
+			res.status = 500;
+			res.end('View error log on console');
+		})
+})
 router.get('/get-opt', (req, res) => {
 	
 	var opt = Math.floor(Math.random()*100000).toString();

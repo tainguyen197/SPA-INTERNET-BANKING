@@ -37,3 +37,18 @@ export function USER_ACCOUNT_RECEIVER(payload){
     }
 }
 
+export function NEW_USER_ACCOUNT_RECEIVER(payload){
+    return{
+        type: 'NEW_USER_ACCOUNT_RECEIVER',
+        payload
+    }
+}
+
+export function DELETE_USER_ACCOUNT_RECEIVER(payload){
+    return{
+        type: 'DELETE_USER_ACCOUNT_RECEIVER',
+        payload
+    }
+}
+
+
