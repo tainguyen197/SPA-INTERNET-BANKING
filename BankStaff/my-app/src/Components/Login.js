@@ -22,9 +22,46 @@ class LoginComponent extends Component {
         }
     }
 
+    componentWillMount(){
+        var instance = axios.create({
+            baseURL: 'http://localhost:4000/login/token/',
+            headers: {
+            'Authorization': document.cookie
+            },
+            timeout: 15000
+            });
+        //var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
+        
+        instance.get()
+            .then(result => {
+                console.log(result);
+                return result.data;
+            }).then(data => {
+                if (data.length === 0) {
+                }
+                else {
+                    this.props.history.push('/home#/');
+                    this.setState({
+                        redirectTo: '/home#/',
+                    })
+                    return
+                    //
+                }
+            }
+            )
+    }
+
     submidLogin = () => {
-        var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
-        axios.get(req)
+        var instance = axios.create({
+            baseURL: 'http://localhost:4000/login/staff-login/',
+            headers: {
+            'Authorization': document.cookie
+            },
+            timeout: 15000
+            });
+        //var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
+        
+        instance.get("?username=" + this.state.username + "&password=" + this.state.password)
             .then(result => {
                 console.log(result);
                 return result.data;
@@ -44,7 +81,8 @@ class LoginComponent extends Component {
 
                          })*/
                     //lấy thông tin user lưu vào store
-                    console.log(data[1]);
+                    document.cookie = 'Bearer='+data[1];
+                    console.log(document.cookie);
                     var userID = data[0].IDUser;
                     var req = "http://localhost:4000/user/staff-loadUserInfoById/?id=" + userID;
                     axios.get(req)
@@ -106,6 +144,7 @@ class LoginComponent extends Component {
     }
 
     render() {
+        
         if (this.state.redirectTo) {
             //return <Redirect to = {{pathname: this.state.redirectTo}}/>
         }
