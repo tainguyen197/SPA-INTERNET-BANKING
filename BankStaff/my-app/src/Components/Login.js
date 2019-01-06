@@ -26,6 +26,7 @@ class LoginComponent extends Component {
         var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
         axios.get(req)
             .then(result => {
+                console.log(result);
                 return result.data;
             }).then(data => {
                 if (data.length === 0) {
@@ -43,6 +44,7 @@ class LoginComponent extends Component {
 
                          })*/
                     //lấy thông tin user lưu vào store
+                    console.log(data[1]);
                     var userID = data[0].IDUser;
                     var req = "http://localhost:4000/user/staff-loadUserInfoById/?id=" + userID;
                     axios.get(req)

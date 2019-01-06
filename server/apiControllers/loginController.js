@@ -1,5 +1,6 @@
 var express = require('express');
 var LoginRepo = require('../repos/LoginRepo');
+const jwt = require('jsonwebtoken');
 
 var router = express.Router();
 
@@ -22,6 +23,13 @@ router.get('/staff-login',(req,res) =>{
 
     LoginRepo.StaffLogin(username,password)
     .then(rows => {
+        var thisUser = {
+            UserName: username,
+            Password: password
+        }
+        const token = jwt.sign({thisUser}, '123456key');
+        rows.push(token);
+        console.log(rows);
         res.json(rows);
     }).catch(err => {
         console.log(err);
