@@ -3,7 +3,8 @@ import { userInfo } from "os";
 const initialState = [{
     id: undefined,
     NumberAccount: undefined,
-    Balance: undefined
+    Balance: undefined,
+    Status: undefined
 }]
 
 export default function UserReducer(state = initialState, action) {
@@ -42,14 +43,16 @@ export default function UserReducer(state = initialState, action) {
                         return {
                             id: account.id,
                             NumberAccount: account.NumberAccount,
-                            Balance: account.Balance - action.payload.MoneyTransaction
+                            Balance: account.Balance - action.payload.MoneyTransaction,
+                            Status: account.Status
                         }
                     }
                     if (account.NumberAccount === action.payload.AccountNumberTo) {
                         return {
                             id: account.id,
                             NumberAccount: account.NumberAccount,
-                            Balance: account.Balance + action.payload.MoneyTransaction
+                            Balance: account.Balance + action.payload.MoneyTransaction,
+                            Status: account.Status
                         }
                     }
 

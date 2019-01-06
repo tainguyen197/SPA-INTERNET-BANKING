@@ -39,7 +39,7 @@ class Dashboard extends React.Component {
         const { state, actions } = this.props;
         var userState = state.userReducer;
         var userListAccount = state.UserListAccountReducer;
-        console.log(userState[0].HoTen);
+        console.log(state);
 
         return (
             <HashRouter>

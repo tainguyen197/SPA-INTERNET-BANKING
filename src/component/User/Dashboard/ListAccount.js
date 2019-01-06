@@ -98,7 +98,7 @@ class ListAccount extends Component {
 
     getDataAccount(data) {
         var today = new Date()
-        var date = today.getHours()  + ':' + today.getMinutes() + ', Ngày ' +  today.getDate() + ' Tháng ' + (today.getMonth() + 1) + ' Năm ' + today.getFullYear();
+        var date = today.getHours() + ':' + today.getMinutes() + ', Ngày ' + today.getDate() + ' Tháng ' + (today.getMonth() + 1) + ' Năm ' + today.getFullYear();
         var info = {
             ID: undefined,
             AccountNumberFrom: parseInt(this.state.AccountDelete),
@@ -129,11 +129,17 @@ class ListAccount extends Component {
         })
 
         if (window.confirm("Bạn chắc chắn muốn xóa tài khoản này?")) {
-            if (balance > 0) { }
-            Verify = 1;
-            this.setState({
-                showModel: true
-            })
+            var { state } = this.props;
+            if (state.length < 3) {
+                window.alert('Bạn phải duy trì ít nhất 1 tài khoản thanh toán');
+            }
+            else {
+                if (balance > 0) { }
+                Verify = 1;
+                this.setState({
+                    showModel: true
+                })
+            }
         } else {
 
         }
@@ -191,7 +197,7 @@ class ListAccount extends Component {
 
                 {state.map(account => {
                     console.log(state);
-                    if (account !== undefined && account.NumberAccount !== undefined) {
+                    if (account !== undefined && account.NumberAccount !== undefined && account.Status === 0) {
                         var CustomBalance = this.customBalance(account.Balance);
                         return (
                             <div className="center-home">
@@ -210,7 +216,7 @@ class ListAccount extends Component {
                                     </div>
                                     <div className="col-md-3 move-money-label">
                                         <Button onClick={e => this.deleteAccount(e, account.NumberAccount, account.Balance)}>Xóa tài khoản
-   
+
                                     </Button></div>
                                 </div>
                             </div>

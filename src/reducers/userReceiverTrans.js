@@ -2,7 +2,8 @@ const initialState = [{
     ID: undefined,
     IDUser: undefined,
     Name: undefined,
-    Account: undefined
+    Account: undefined,
+    Status: undefined
 }]
 
 export default function UserReducer(state = initialState, action) {
@@ -25,7 +26,8 @@ export default function UserReducer(state = initialState, action) {
                         ID: receiver.ID,
                         IDUser: receiver.IDUser,
                         Name: action.payload.Name,
-                        Account: receiver.Account
+                        Account: receiver.Account,
+                        Status: receiver.Status
                     }
                 }
             })

@@ -42,7 +42,7 @@ class Content extends Component {
             var info = data[0];
             this.setState({
                 Name: info.HoTen,
-                BalanceReceiver: info.Balance
+                BalanceReceiver: info.Balance,
             })
         })
     }
@@ -71,7 +71,6 @@ class Content extends Component {
     goNext() {
         console.log(this.state);
         this.props.sendDataContent(this.state);
-        
         this.props.sendHideContent(1);
         var user = {
             username: "Mai Hữu Tuấn",
@@ -82,6 +81,8 @@ class Content extends Component {
             .then(result => {
                 console.log(result.data.opt);
                 return result.data.opt;
+            }).then(data =>{
+                this.props.sendOTPContent(data);
             })
     }
 
@@ -98,7 +99,7 @@ class Content extends Component {
         return (
             <Modal
                 show={true}
-                onHide={this.props.hindModal}
+                onHide={this.props.hideContent}
             >
                 <Modal.Header>
                     <Modal.Title>{this.state.HeaderContent}</Modal.Title>
@@ -123,7 +124,7 @@ class Content extends Component {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button onClick={this.props.hindModal}>Đóng</Button>
+                    <Button onClick={this.props.hideContent}>Đóng</Button>
                     <Button bsStyle="primary" onClick={this.goNext}>Tiếp tục</Button>
                 </Modal.Footer>
             </Modal>
@@ -136,21 +137,33 @@ class OTP extends Component {
     constructor(props) {
         super(props);
         this.goNext = this.goNext.bind(this);
+        this.edtOTP = this.edtOTP.bind(this);
         this.state = {
             contentData: undefined,
-            accountData: undefined
+            accountData: undefined,
+            OTP: undefined
         }
     }
 
+    edtOTP(evt){
+        this.setState({
+            OTP: evt.target.value
+        })
+    }
     goNext(){
-        this.props.doTransaction();
+        var otp = this.props.OTP;
+        if(this.OTP === otp)
+            this.props.doTransaction();
+            else{
+                window.alert('Bạn đã nhập sai OTP');
+            }
     }
 
     render() {
         return(
         <Modal
             show={true}
-            onHide={this.props.hindModal}
+            onHide={this.props.hideOTP}
         >
             <Modal.Header>
                 <Modal.Title>Xác nhận mã OTP</Modal.Title>
@@ -159,13 +172,13 @@ class OTP extends Component {
             <Modal.Body>
                 <div>
                     <div className="form-move-money">
-                        <input type="text" className="form-control input-kyc" id="OTP" name="OTP" maxLength="25" placeholder="Nhập số OTP" required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
+                        <input onChange = {this.edtOTP} type="text" className="form-control input-kyc" id="OTP" name="OTP" maxLength="25" placeholder="Nhập số OTP" required="" fix-ie-only="" focus-me="" float-labels="" convert-vietnamese-character="true"></input>
                     </div>
                 </div>
             </Modal.Body>
 
             <Modal.Footer>
-                <Button>Đóng</Button>
+                <Button onClick = {this.props.hideOTP}>Đóng</Button>
                 <Button bsStyle="primary" onClick = {this.goNext}>Tiếp tục</Button>
             </Modal.Footer>
         </Modal>
@@ -261,7 +274,7 @@ class Account extends Component {
                 onHide={this.props.hindModal}
             >
                 <Modal.Header>
-                    <Modal.Title>{this.state.HeaderContent}</Modal.Title>
+                    <Modal.Title>{this.state.hideAccount}</Modal.Title>
                 </Modal.Header>
 
                 <Modal.Body>
@@ -276,7 +289,7 @@ class Account extends Component {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button onClick = {this.props.hindModal}>Đóng</Button>
+                    <Button onClick = {this.props.hideAccount}>Đóng</Button>
                     <Button bsStyle="primary" onClick = {this.goNext} >Tiếp tục</Button>
                 </Modal.Footer>
             </Modal>
@@ -289,11 +302,16 @@ class MoveMoneyModel extends React.Component {
         super(props);
         this.hindModalAccount = this.hindModalAccount.bind(this);
         this.hindModalContent = this.hindModalContent.bind(this);
+        this.justHindModalAccount = this.justHindModalAccount.bind(this);
+        this.justHindModalContent = this.justHindModalContent.bind(this);
+        this.justHindModalOTP = this.justHindModalOTP.bind(this);
+
         
         this.showModal = this.showModal.bind(this);
         this.ContentData = this.ContentData.bind(this);
         this.AccountData = this.AccountData.bind(this);
         this.Test = this.Test.bind(this);
+        this.getOTP = this.getOTP.bind(this);
         this.state = {
             isOTP: false,
             isContent: false,
@@ -301,10 +319,31 @@ class MoveMoneyModel extends React.Component {
             FooterContent: 'Tiếp Theo',
             HeaderContent: 'Vui lòng chọn tài khoản thanh toán',
             contentData: undefined,
-            accountData: undefined
+            accountData: undefined,
+            OTP: undefined
         }
     }
-
+    justHindModalAccount(){
+        this.setState({
+            isAccount:false
+        })
+    }
+    justHindModalContent(){
+        this.setState({
+            isContent:false
+        })
+    }
+    justHindModalOTP(){
+        this.setState({
+            isOTP:false
+        })
+    }
+    getOTP(otp){
+        console.log(otp);
+        this.setState({
+            OTP: otp
+        })
+    }
     ContentData(data) {
         this.setState({
             contentData: data
@@ -334,7 +373,6 @@ class MoveMoneyModel extends React.Component {
 
         }
         this.props.Transaction(info);
-        //cập nhật lịch sử người nahanj
         //cập nhật tiền trong balance
         var money = {
             AccountNumberFrom: parseInt(this.state.accountData.selectedAccount),
@@ -372,9 +410,9 @@ class MoveMoneyModel extends React.Component {
         const { state } = this.props;
         return (
             <div className="static-modal">
-                {this.state.isAccount && <Account account = {state} sendDataAccount = {this.AccountData} sendHideAccount = {this.hindModalAccount} ></Account>}
-                {this.state.isContent && <Content  sendDataContent = {this.ContentData} sendHideContent = {this.hindModalContent}></Content>}
-                {this.state.isOTP && <OTP doTransaction = {this.Test}></OTP>}
+                {this.state.isAccount && <Account account = {state} sendDataAccount = {this.AccountData} sendHideAccount = {this.hindModalAccount} hideAccount = {this.justHindModalAccount}></Account>}
+                {this.state.isContent && <Content  sendOTPContent = {this.getOTP} sendDataContent = {this.ContentData} sendHideContent = {this.hindModalContent} hideContent = {this.justHindModalContent}></Content>}
+                {this.state.isOTP && <OTP OTP = {this.state.OTP} doTransaction = {this.Test} hideOTP = {this.justHindModalOTP}></OTP>}
             </div>
         )
     }

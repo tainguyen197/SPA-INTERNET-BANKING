@@ -11,7 +11,7 @@ exports.loadUserAccountsById = (id) =>{
 }
 
 exports.deleteAccount = (numberAccount) =>{
-	var sql = 'DELETE FROM user_balances WHERE NumberAccount = ' + numberAccount;
+	var sql = 'UPDATE user_balances SET Status = 1 WHERE NumberAccount = ' + numberAccount;
 	return db.load(sql);
 }
 
