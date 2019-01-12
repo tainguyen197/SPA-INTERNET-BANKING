@@ -9,6 +9,7 @@ import createUserAccount from './component/Staff/UserAccount';
 import createCheckingAccount from './component/Staff/CheckingAccount';
 const Routes = () => (
         <Switch>
+            <Route exact path="/" component={Login} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/home" component={DashboardUser}/>
             <Route exact path="/bankstaffhome" component={bankStaffHome}/>

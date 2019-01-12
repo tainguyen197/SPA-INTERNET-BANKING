@@ -32,8 +32,17 @@ class Menu extends Component {
             .then(function (response) {
                 console.log(response);
             })*/}
-        var req = "http://localhost:4000/user-account/create-checking-account/?username=" + this.state.username;
-        axios.post(req).then(result => {
+        //var req = "http://localhost:4000/user-account/create-checking-account/?username=" + this.state.username;
+        var instance = axios.create({
+            baseURL: 'http://localhost:4000/user-account/create-checking-account/',
+            headers: {
+                'Authorization': document.cookie
+            },
+            timeout: 15000
+        });
+        //var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
+
+        instance.post("?username=" + this.state.username).then(result => {
             return result.data;
         }).then(data => {
             if (data.length === 0) {

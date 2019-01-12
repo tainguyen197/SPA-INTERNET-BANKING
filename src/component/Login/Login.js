@@ -24,27 +24,34 @@ class LoginComponent extends Component {
         }
     }
 
-    submidLogin = () => {
-      
-        var req = "http://localhost:4000/login/?username=" + this.state.username + "&password=" + this.state.password;
-        axios.get(req)
+    componentWillMount() {
+        var instance = axios.create({
+            baseURL: 'http://localhost:4000/login/token-customer/',
+            headers: {
+                'Authorization': document.cookie
+            },
+            timeout: 15000
+        });
+        //var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
+
+        instance.get()
             .then(result => {
+                console.log(result);
                 return result.data;
             }).then(data => {
                 if (data.length === 0) {
-                    window.alert('Sai tên đăng nhập hoặc tài khoản');
                 }
                 else {
-                     //lấy thông tin user receiver lưu vào store
-                     var userID = data[0].IDUser;
-                     var req = "http://localhost:4000/user/loadUserReceiverById/?id=" + userID;
-                     axios.get(req)
-                         .then(result => {
-                             return result.data;
-                         }).then(data => {
-                             var userReceiver = data[0];
-                             this.props.userReicerverAction(userReceiver);
-                         })
+                    var userID = data[0].IDUser;
+                    var userID = data[0].IDUser;
+                    var req = "http://localhost:4000/user/loadUserReceiverById/?id=" + userID;
+                    axios.get(req)
+                        .then(result => {
+                            return result.data;
+                        }).then(data => {
+                            var userReceiver = data[0];
+                            this.props.userReicerverAction(userReceiver);
+                        })
                     //lấy thông tin user lưu vào store
                     var userID = data[0].IDUser;
                     var req = "http://localhost:4000/user/loadUserInfoById/?id=" + userID;
@@ -67,7 +74,7 @@ class LoginComponent extends Component {
 
                             userListAccount.forEach(element => {
                                 this.props.userListAccountAction(element);
-                                console.log('element',element);
+                                console.log('element', element);
                                 //lấy thông tin giao dịch của các tài khoản
                                 var req = "http://localhost:4000/user/loadUserTransactionsById/?numberAccount=" + element.NumberAccount;
                                 axios.get(req)
@@ -79,7 +86,7 @@ class LoginComponent extends Component {
                                         })
                                     })
 
-                                    //lấy thông tin giao dịch của các tài khoản
+                                //lấy thông tin giao dịch của các tài khoản
                                 var req = "http://localhost:4000/user/loadUserReceiverTransactionsById/?numberAccount=" + element.NumberAccount;
                                 axios.get(req)
                                     .then(data => {
@@ -90,7 +97,81 @@ class LoginComponent extends Component {
                                             this.props.userAccountAction(transaction);
                                         })
                                     })
-                              
+
+                            });
+
+                        })
+                    this.props.history.push('/home#/');
+                    this.setState({
+                        redirectTo: '/home#/',
+                    })
+                    return
+                    //
+                }
+            }
+            )
+    }
+
+    submidLogin = () => {
+
+        var req = "http://localhost:4000/login/?username=" + this.state.username + "&password=" + this.state.password;
+        axios.get(req)
+            .then(result => {
+                return result.data;
+            }).then(data => {
+                if (data.length === 0) {
+                    window.alert('Sai tên đăng nhập hoặc tài khoản');
+                }
+                else {
+                    //lấy thông tin user receiver lưu vào store
+                    document.cookie = 'Bearer=' + data[1];
+                    console.log(document.cookie);
+                    var userID = data[0].IDUser;
+                    var userID = data[0].IDUser;
+                    var req = "http://localhost:4000/user/loadUserReceiverById/?id=" + userID;
+                    axios.get(req)
+                        .then(result => {
+                            return result.data;
+                        }).then(data => {
+                            var userReceiver = data[0];
+                            this.props.userReicerverAction(userReceiver);
+                        })
+                    //lấy thông tin user lưu vào store
+                    var userID = data[0].IDUser;
+                    var req = "http://localhost:4000/user/loadUserInfoById/?id=" + userID;
+                    axios.get(req)
+                        .then(result => {
+                            return result.data;
+                        }).then(data => {
+                            var userInfo = data[0];
+                            this.props.updateUserAction(userInfo);
+                            //console.log(this.props.state);
+                        })
+
+                    //lấy thông tin userListAccount lưu vào store
+                    var req = "http://localhost:4000/user/loadUserAccountsById?id=" + userID;
+                    axios.get(req)
+                        .then(result => {
+                            return result.data;
+                        }).then(data => {
+                            var userListAccount = data;
+
+                            userListAccount.forEach(element => {
+                                this.props.userListAccountAction(element);
+                                console.log('element', element);
+                                //lấy thông tin giao dịch của các tài khoản
+                                var req = "http://localhost:4000/user/loadUserTransactionsById/?numberAccount=" + element.NumberAccount;
+                                axios.get(req)
+                                    .then(data => {
+                                        return data.data;
+                                    }).then(transactions => {
+                                        transactions.map(transaction => {
+                                            this.props.userAccountAction(transaction);
+                                        })
+                                    })
+
+                
+
                             });
 
                         })
@@ -143,7 +224,7 @@ class LoginComponent extends Component {
                                     </div>
                                     <div className="form-group">
                                         <div>
-                                            <input onChange={this.updatePassword} type="text" className="form-control input-kyc" id="passwordTxt" name="password" maxlength="25" placeholder="Mật khẩu" required="" fix-ie-only="" focus-me="" float-labels="" autocomplete="off" restrict-special-character="a-z0-9A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂưăạảấầẩẫậắằẳẵặẹẻẽếềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ" convert-vietnamese-character="true"></input>
+                                            <input type="password" onChange={this.updatePassword} className="form-control input-kyc" id="passwordTxt" name="password" maxlength="25" placeholder="Mật khẩu" required="" fix-ie-only="" focus-me="" float-labels="" autocomplete="off" restrict-special-character="a-z0-9A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂưăạảấầẩẫậắằẳẵặẹẻẽếềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ" convert-vietnamese-character="true"></input>
                                         </div>
                                     </div>
                                     <div className="form-group">

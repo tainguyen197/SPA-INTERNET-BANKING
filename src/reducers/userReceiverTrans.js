@@ -1,3 +1,5 @@
+import Axios from "axios";
+
 const initialState = [{
     ID: undefined,
     IDUser: undefined,
@@ -17,10 +19,10 @@ export default function UserReducer(state = initialState, action) {
             //Cập nhật lên db
             var numberAccount = action.payload.Account;
             var name = action.payload.Name;
-            var id = action.payload.ID;
-            console.log(numberAccount);
+            var id = action.payload.IDUser;
+            console.log(action.payload);
             var res = 'http://localhost:4000/user/newReicever?name=' + name + '&account=' + numberAccount + '&id='+id;
-            fetch(res, {
+            Axios(res, {
                 method: 'POST',
                 mode: 'cors',
                 headers: {

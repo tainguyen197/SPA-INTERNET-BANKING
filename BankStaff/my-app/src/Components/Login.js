@@ -22,10 +22,58 @@ class LoginComponent extends Component {
         }
     }
 
-    submidLogin = () => {
-        var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
-        axios.get(req)
+    componentWillMount(){
+        var instance = axios.create({
+            baseURL: 'http://localhost:4000/login/token/',
+            headers: {
+            'Authorization': document.cookie
+            },
+            timeout: 15000
+            });
+        //var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
+        
+        instance.get()
             .then(result => {
+                console.log(result);
+                return result.data;
+            }).then(data => {
+                if (data.length === 0) {
+                }
+                else {
+                    var userID = data[0].IDUser;
+                    var req = "http://localhost:4000/user/staff-loadUserInfoById/?id=" + userID;
+                    axios.get(req)
+                        .then(result => {
+                            return result.data;
+                        }).then(data => {
+                            var userInfo = data[0];
+                            this.props.updateUserAction(userInfo);
+                            //console.log(this.props.state);
+                        })
+                    this.props.history.push('/home#/');
+                    this.setState({
+                        redirectTo: '/home#/',
+                    })
+                    return
+                    //
+                }
+            }
+            )
+    }
+
+    submidLogin = () => {
+        var instance = axios.create({
+            baseURL: 'http://localhost:4000/login/staff-login/',
+            headers: {
+            'Authorization': document.cookie
+            },
+            timeout: 15000
+            });
+        //var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
+        
+        instance.get("?username=" + this.state.username + "&password=" + this.state.password)
+            .then(result => {
+                console.log(result);
                 return result.data;
             }).then(data => {
                 if (data.length === 0) {
@@ -43,6 +91,8 @@ class LoginComponent extends Component {
 
                          })*/
                     //lấy thông tin user lưu vào store
+                    document.cookie = 'Bearer='+data[1];
+                    console.log(document.cookie);
                     var userID = data[0].IDUser;
                     var req = "http://localhost:4000/user/staff-loadUserInfoById/?id=" + userID;
                     axios.get(req)
@@ -104,6 +154,7 @@ class LoginComponent extends Component {
     }
 
     render() {
+        
         if (this.state.redirectTo) {
             //return <Redirect to = {{pathname: this.state.redirectTo}}/>
         }
@@ -126,7 +177,7 @@ class LoginComponent extends Component {
                                     </div>
                                     <div className="form-group">
                                         <div>
-                                            <input onChange={this.updatePassword} type="text" className="form-control input-kyc" id="passwordTxt" name="password" maxlength="25" placeholder="Mật khẩu" required="" fix-ie-only="" focus-me="" float-labels="" autocomplete="off" restrict-special-character="a-z0-9A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂưăạảấầẩẫậắằẳẵặẹẻẽếềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ" convert-vietnamese-character="true"></input>
+                                            <input onChange={this.updatePassword} type="password" className="form-control input-kyc" id="passwordTxt" name="password" maxlength="25" placeholder="Mật khẩu" required="" fix-ie-only="" focus-me="" float-labels="" autocomplete="off" restrict-special-character="a-z0-9A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼẾỀỂưăạảấầẩẫậắằẳẵặẹẻẽếềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ" convert-vietnamese-character="true"></input>
                                         </div>
                                     </div>
                                     <div className="form-group">

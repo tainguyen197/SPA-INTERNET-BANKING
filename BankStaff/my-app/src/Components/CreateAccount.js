@@ -4,10 +4,11 @@ import { NavLink } from 'react-router-dom'
 import UserAccount from './UserAccount';
 import checkingAccount from './CheckingAccount';
 import { Route } from 'react-router-dom'
+import axios from 'axios'
 const divstyle = {
     'background-color': 'rgba(255, 255, 255, 0)',
     'position': 'relative',
-    'top': '10px'
+    'top': '30px'
 };
 const divstyle1 = {
     'background-color': 'rgba(255, 255, 255, 0)',
@@ -20,6 +21,7 @@ const divposition = {
 }
 
 class CreateAccount extends Component {
+   
     render() {
         return (
             <div>

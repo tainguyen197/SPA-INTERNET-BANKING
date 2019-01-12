@@ -25,6 +25,7 @@ class Content extends Component {
         this.findNameAccount = this.findNameAccount.bind(this);
         this.state = {
             ID: undefined,
+            IDUser: undefined,
             NumberAccount: undefined,
             BalanceReceiver: undefined,
             Name: undefined,
@@ -34,6 +35,10 @@ class Content extends Component {
     }
 
     findNameAccount = () => {
+        var {user} = this.props;
+        this.setState({
+            IDUser: user[0].ID
+        })
         var req = "http://localhost:4000/user/loadUserInfoByNumberAccount/?numberAccount=" + parseInt(this.state.NumberAccount);
         Axios.get(req)
             .then(data => {
@@ -72,8 +77,10 @@ class Content extends Component {
     }
 
     goNext() {
-        var {user} = this.props
+        var {user} = this.props;
         console.log(user);
+       
+        console.log(this.state);
         this.props.sendDataContent(this.state);
         this.props.sendHideContent(1);
         var req = "http://localhost:4000/user/get-opt/?username=" + user[0].HoTen + "&email=" + user[0].Email;
@@ -387,7 +394,7 @@ class MoveMoneyModel extends React.Component {
 
         //Cập nhật danh sách người nhận
         var receiver = {
-            IDUser: this.state.contentData.ID,
+            IDUser: this.state.contentData.IDUser,
             Name: this.state.contentData.Name,
             Account: parseInt(this.state.contentData.NumberAccount),
         }

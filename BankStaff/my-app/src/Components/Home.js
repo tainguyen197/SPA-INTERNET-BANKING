@@ -6,6 +6,7 @@ import { Route, HashRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import createAccount from './CreateAccount';
 import recharge from './Recharge';
+import axios from 'axios'
 //import * as userActions from '../../../actions/userActions'
 //import * as BalancesAction from '../../../actions/availableBalances'
 
@@ -44,6 +45,40 @@ class Dashboard extends React.Component {
             accountNumber: account.NumberAccount
         })
     }
+
+    componentWillMount(){
+        console.log("aaaaaaa");
+        console.log(document.cookie);
+        var instance = axios.create({
+            baseURL: 'http://localhost:4000/login/token/',
+            headers: {
+            'Authorization': document.cookie
+            },
+            timeout: 15000
+            });
+        //var req = "http://localhost:4000/login/staff-login/?username=" + this.state.username + "&password=" + this.state.password;
+        
+        instance.get()
+            .then(result => {
+                console.log("111111111111");
+                console.log(result);
+                return result.data;
+            }).then(data => {
+                console.log("22222222222222222");
+                if (data.length === 0) {
+                }
+                else {
+                    this.props.history.push('/home#/');
+                    this.setState({
+                        redirectTo: '/home#/',
+                    })
+                    return
+                    //
+                }
+            }
+            )
+    }
+
 
     componentDidMount() {
         console.log(this.props.state);
