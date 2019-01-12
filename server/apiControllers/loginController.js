@@ -11,15 +11,6 @@ router.get('/', (req, res) => {
 
     LoginRepo.Login(username, password)
         .then(rows => {
-<<<<<<< HEAD
-            var thisUser = {
-                UserName: username,
-                Password: password
-            }
-            const token = jwt.sign({ thisUser }, '123456key');
-            rows.push(token);
-=======
->>>>>>> d50f84e5c68e4517343e06a4b68da9eacd06392a
             res.json(rows);
         }).catch(err => {
             console.log(err);
@@ -27,36 +18,7 @@ router.get('/', (req, res) => {
         })
 })
 
-<<<<<<< HEAD
-router.get('/token-customer', verifyToken, (req, res) => {
-    console.log(req.token);
-    jwt.verify(req.token, '123456key', (err, authData) => {
-        if (err) {
-            console.log("2");
-            console.log(err);
-            res.render('login');
-        }
-        else {
-            console.log("-----------");
-            console.log(authData);
-            authData = authData.thisUser;
-            console.log("6");
-            LoginRepo.Login(authData.UserName, authData.Password)
-                .then(rows => {
-                    res.json(rows);
-                }).catch(err => {
-                    console.log(err);
-                    res.statusCode = 500;
-                })
-        }
-    })
-})
-
 router.get('/token', verifyToken, (req, res) => {
-    console.log(req.token);
-=======
-router.get('/token', verifyToken, (req, res) => {
->>>>>>> d50f84e5c68e4517343e06a4b68da9eacd06392a
     jwt.verify(req.token, '123456key', (err, authData) => {
         if (err) {
             console.log("2");
@@ -75,10 +37,6 @@ router.get('/token', verifyToken, (req, res) => {
                     console.log(err);
                     res.statusCode = 500;
                 })
-<<<<<<< HEAD
-=======
-
->>>>>>> d50f84e5c68e4517343e06a4b68da9eacd06392a
         }
     })
 })
