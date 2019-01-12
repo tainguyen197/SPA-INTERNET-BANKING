@@ -16,8 +16,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.1",
     "react-toasts": "^2.0.14",
-    "redux": "^4.0.1",
-    "dns" : "file:./src/mock/dns"
+    "redux": "^4.0.1"
   },
   "devDependencies": {},
   "scripts": {

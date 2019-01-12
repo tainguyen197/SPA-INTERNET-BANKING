@@ -40,6 +40,7 @@ class LoginComponent extends Component {
                 if (data.length === 0) {
                 }
                 else {
+<<<<<<< HEAD
                     var userID = data[0].IDUser;
                     var req = "http://localhost:4000/user/staff-loadUserInfoById/?id=" + userID;
                     axios.get(req)
@@ -50,6 +51,8 @@ class LoginComponent extends Component {
                             this.props.updateUserAction(userInfo);
                             //console.log(this.props.state);
                         })
+=======
+>>>>>>> d50f84e5c68e4517343e06a4b68da9eacd06392a
                     this.props.history.push('/home#/');
                     this.setState({
                         redirectTo: '/home#/',
